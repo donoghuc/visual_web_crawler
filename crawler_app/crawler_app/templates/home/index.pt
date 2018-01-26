@@ -37,17 +37,17 @@
                 <div class="row">
 
                     <div class="col-sm-4 band-members">
-                        <img src="/static/img/cas.png" class="img-fluid"/>
+                        <img src="/static/img/cas.png" class="img-fluid rounded-circle"/>
                         <br>
                         <span>Cas Donoghue</span>
                     </div>
                     <div class="col-sm-4 band-members">
-                        <img src="/static/img/david.png" class="img-fluid"/>
+                        <img src="/static/img/david.png" class="img-fluid rounded-circle"/>
                         <br>
                         <span>David Hartman</span>
                     </div>
                     <div class="col-sm-4 band-members">
-                        <img src="/static/img/ngan.png" class="img-fluid"/>
+                        <img src="/static/img/ngan.png" class="img-fluid rounded-circle"/>
                         <br>
                         <span>Ngan Tran</span>
                     </div>
