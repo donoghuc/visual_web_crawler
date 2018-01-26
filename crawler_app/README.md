@@ -71,6 +71,33 @@ Serving on http://localhost:6543
 ```
 - i can safely close that terminal and when I log back in i can look up the process using top -U
 - This will show me all my processes, in this case i have pserve running at PID 26349, so i could kill that from new session. 
+- note make sure you are using bash shell if you want to use kill -kill
 ```
-flip1 ~ 153% top -U donoghuc
+flip1 ~ 151% top -U donoghuc
+
+top - 08:33:11 up 30 days, 13:30, 61 users,  load average: 4.22, 9.92, 18.98
+Tasks: 1310 total,   5 running, 1293 sleeping,  10 stopped,   2 zombie
+%Cpu(s): 16.6 us,  0.2 sy,  0.0 ni, 83.1 id,  0.0 wa,  0.0 hi,  0.1 si,  0.0 st
+KiB Mem : 98821584 total, 32793244 free, 47274048 used, 18754296 buff/cache
+KiB Swap:  4194300 total,   189032 free,  4005268 used. 49525268 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND     
+29413 donoghuc  20   0  169224   4568   2636 R   1.3  0.0   0:00.17 top         
+26349 donoghuc  20   0  531492  31360   5180 S   0.0  0.0   0:01.84 pserve      
+29316 donoghuc  20   0  166188   2408   1120 S   0.0  0.0   0:00.01 sshd        
+29317 donoghuc  20   0  136132   2096   1360 S   0.0  0.0   0:00.06 tcsh  
+
+bash-4.2$ kill -kill 26349
+bash-4.2$ top -U donoghuc
+
+top - 08:34:25 up 30 days, 13:32, 61 users,  load average: 4.43, 8.71, 17.86
+Tasks: 1316 total,   5 running, 1299 sleeping,  10 stopped,   2 zombie
+%Cpu(s): 16.8 us,  1.7 sy,  0.0 ni, 81.5 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+KiB Mem : 98821584 total, 32834456 free, 47235764 used, 18751368 buff/cache
+KiB Swap:  4194300 total,   189032 free,  4005268 used. 49563088 avail Mem 
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND     
+30617 donoghuc  20   0  169264   4444   2580 R   8.7  0.0   0:00.09 top         
+29316 donoghuc  20   0  166188   2408   1120 S   0.0  0.0   0:00.02 sshd        
+29317 donoghuc  20   0  136132   2144   1404 S   0.0  0.0   0:00.06 tcsh     
 ```
