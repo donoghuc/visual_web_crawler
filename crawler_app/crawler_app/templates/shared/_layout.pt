@@ -1,6 +1,5 @@
-<!DOCTYPE html metal:define-macro="layout">
-<html lang="{{request.locale_name}}">
-  <head>
+<!DOCTYPE html>
+<html lang="en-us" metal:define-macro="layout">
   <head>
 
     <meta charset="utf-8">
@@ -19,15 +18,18 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/business-casual.css" rel="stylesheet">
+    <div metal:define-slot="additional_css"></div>
 
   </head>
 
   <body>
 
-    <h1 class="site-heading text-center text-white d-none d-lg-block">
+    <div metal:define-slot="head_above_nav"></div>
+
+<!--     <h1 class="site-heading text-center text-white d-none d-lg-block">
       <span class="site-heading-upper text-primary mb-3">Caelum Visual Web Crawler</span>
       <span class="site-heading-lower">Explore The Web</span>
-    </h1>
+    </h1> -->
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
@@ -54,7 +56,9 @@
       </div>
     </nav>
 
-    <section class="page-section clearfix">
+    <div metal:define-slot="main_content"></div>
+
+<!--     <section class="page-section clearfix">
       <div class="container">
 
         <div class="intro-text text-center bg-faded p-5 rounded">
@@ -114,18 +118,18 @@
           </div>
 
       </div>
-    </section>
+    </section> -->
 
     <footer class="footer text-faded text-center py-5">
       <div class="container">
-        <p class="m-0 small">Copyright &copy; Your Website 2018</p>
+        <p class="m-0 small">Copyright &copy; Team Caelum 2018</p>
       </div>
     </footer>
 
     <!-- Bootstrap core JavaScript -->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <div metal:define-slot="additional_js"></div>
   </body>
 
 </html>

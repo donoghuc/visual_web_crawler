@@ -1,0 +1,74 @@
+<div metal:use-macro="view.layout">
+
+  <div metal:fill-slot="head_above_nav">
+    <h1 class="site-heading text-center text-white d-none d-lg-block">
+      <span class="site-heading-upper text-primary mb-3">Caelum Visual Web Crawler</span>
+      <span class="site-heading-lower">Explore The Web</span>
+    </h1>  	
+  </div>
+
+  <div metal:fill-slot="main_content">
+    <section class="page-section clearfix">
+      <div class="container">
+
+        <div class="intro-text text-center bg-faded p-5 rounded">
+          <h2 class="section-heading mb-4">
+            <span class="section-heading-upper">Caelum</span>
+            <span class="section-heading-lower">visual web crawler</span>
+          </h2>
+          <p class="mb-3">Lorem ipsum dolor amet literally farm-to-table wolf vinyl biodiesel kale chips pitchfork vape microdosing wayfarers authentic mixtape. Four loko tattooed squid ramps irony. Put a bird on it food truck palo santo tumeric. Brunch tousled freegan street art synth, PBR iceland disrupt hexagon flannel palo santo retro. PBR photo booth vinyl, actually banjo aesthetic live-edge direct trade fanny pack selfies sustainable tattooed chillwave.
+          </p>
+          <div class="intro-button mx-auto">
+            <a class="btn btn-primary btn-xl" href="#">Register</a>
+            <a class="btn btn-primary btn-xl" href="#">Sign In</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section cta">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-10 mx-auto">
+            <div class="cta-inner text-center rounded">
+              <h2 class="section-heading mb-4">
+                <span class="section-heading-upper">Meet the developers</span>
+              </h2>
+                <div class="row">
+
+                    <div class="col-sm-4 band-members">
+                        <img src="/static/img/cas.png" class="img-fluid"/>
+                        <br>
+                        <span>Cas Donoghue</span>
+                    </div>
+                    <div class="col-sm-4 band-members">
+                        <img src="/static/img/david.png" class="img-fluid"/>
+                        <br>
+                        <span>David Hartman</span>
+                    </div>
+                    <div class="col-sm-4 band-members">
+                        <img src="/static/img/ngan.png" class="img-fluid"/>
+                        <br>
+                        <span>Ngan Tran</span>
+                    </div>
+                </div>
+                <h4 class="mt-3">Cas Donoghue</h4>
+                <p>Lorem ipsum dolor amet literally farm-to-table wolf vinyl biodiesel kale chips pitchfork vape microdosing wayfarers authentic mixtape. Four loko tattooed squid ramps irony.
+                </p>
+                <h4>David Hartman</h4>
+                <p>Lorem ipsum dolor amet literally farm-to-table wolf vinyl biodiesel kale chips pitchfork vape microdosing wayfarers authentic mixtape. Four loko tattooed squid ramps irony.
+                </p>
+                <h4>Ngan Tran</h4>
+                <p>Lorem ipsum dolor amet literally farm-to-table wolf vinyl biodiesel kale chips pitchfork vape microdosing wayfarers authentic mixtape. Four loko tattooed squid ramps irony.
+                </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+
+</div>

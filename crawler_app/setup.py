@@ -12,6 +12,7 @@ requires = [
     'plaster_pastedeploy',
     'pyramid',
     'pyramid_chameleon',
+    'pyramid_handlers',
     'pyramid_debugtoolbar',
     'waitress',
 ]
