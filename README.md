@@ -2,7 +2,7 @@
 Repo for capstone project 
 
 ### installation
-- make sure you have python3 and virtualenv installed (pip install virtualenv)
+- make sure you have python3, virtualenv (pip install virtualenv), and Firefox installed 
 - clone this repo
 __create new virtualenv__
 ```
