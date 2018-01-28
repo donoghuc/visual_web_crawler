@@ -48,12 +48,12 @@ def main(_, **settings):
 #     log_package_versions()
 
 
-# def init_db(_):
-#     top_folder = os.path.dirname(crawler_app.__file__)
-#     rel_folder = os.path.join('db', 'blue_yellow.sqlite')
+def init_db(_):
+    top_folder = os.path.dirname(crawler_app.__file__)
+    rel_folder = os.path.join('db', 'blue_yellow.sqlite')
 
-#     db_file = os.path.join(top_folder, rel_folder)
-#     DbSessionFactory.global_init(db_file)
+    db_file = os.path.join(top_folder, rel_folder)
+    DbSessionFactory.global_init(db_file)
 
 
 def init_mode(config):
