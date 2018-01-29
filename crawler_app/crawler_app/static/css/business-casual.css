@@ -1,9 +1,15 @@
+
+html {
+  position: relative;
+}
+
 body {
   font-family: 'Lora';
   background: url("../img/tests.jpg");
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+  margin-bottom: 12em;
 }
 
 h1,
@@ -220,6 +226,9 @@ p {
 
 .footer {
   background-color: rgba(29, 39, 49, 0.9);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 .text-primary {
