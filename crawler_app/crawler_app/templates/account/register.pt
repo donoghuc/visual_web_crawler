@@ -1,0 +1,7 @@
+<div metal:use-macro="view.layout">
+  <div metal:fill-slot="main_content">
+   <div>
+     <h1>signin</h1>
+   </div>
+  </div>
+</div>

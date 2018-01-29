@@ -43,10 +43,10 @@
               </a>
             </li>
             <li class="nav-item px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="/home">Register</a>
+              <a class="nav-link text-uppercase text-expanded" href="/home/register">Register</a>
             </li>
             <li class="nav-item px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="/home">Sign In</a>
+              <a class="nav-link text-uppercase text-expanded" href="/signin">Sign In</a>
             </li>
           </ul>
         </div>
