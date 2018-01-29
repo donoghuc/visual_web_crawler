@@ -5,11 +5,11 @@ from crawler_app.data.dbsession import DbSessionFactory
 
 class AccountService:
     @staticmethod
-    def create_account(email, plain_text_password):
+    def create_account(username, plain_text_password):
         session = DbSessionFactory.create_session()
 
         account = Account()
-        account.email = email
+        account.username = username
         account.password_hash = AccountService.hash_text(plain_text_password)
 
         session.add(account)
@@ -18,17 +18,17 @@ class AccountService:
         return account
 
     @classmethod
-    def find_account_by_email(cls, email):
+    def find_account_by_username(cls, username):
 
-        if not email or not email.strip():
+        if not username or not username.strip():
             return None
 
-        email = email.lower().strip()
+        username = username.lower().strip()
 
         session = DbSessionFactory.create_session()
 
         account = session.query(Account) \
-            .filter(Account.email == email) \
+            .filter(Account.username == username) \
             .first()
 
         return account
@@ -39,8 +39,8 @@ class AccountService:
         return hashed_text
 
     @classmethod
-    def get_authenticated_account(cls, email, plain_text_password):
-        account = AccountService.find_account_by_email(email)
+    def get_authenticated_account(cls, username, plain_text_password):
+        account = AccountService.find_account_by_username(username)
         if not account:
             return None
 

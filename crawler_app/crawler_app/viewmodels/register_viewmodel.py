@@ -20,6 +20,6 @@ class RegisterViewModel(SigninViewModel):
             self.error = "You must specify a password"
             return
 
-        if not self.email:
-            self.error = "You must specify an email address"
+        if not self.username:
+            self.error = "You must enter a user name"
             return

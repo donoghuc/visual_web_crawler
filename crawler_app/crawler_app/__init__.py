@@ -19,6 +19,7 @@ from pyramid.config import Configurator
 
 import crawler_app
 import crawler_app.controllers.home_controller as home
+from crawler_app.data.dbsession import DbSessionFactory
 # from crawler_app.services.log_service import LogService
 
 dev_mode = False
@@ -32,7 +33,7 @@ def main(_, **settings):
     init_mode(config)
     init_includes(config)
     init_routing(config)
-    # init_db(config)
+    init_db(config)
 
     return config.make_wsgi_app()
 
@@ -50,7 +51,7 @@ def main(_, **settings):
 
 def init_db(_):
     top_folder = os.path.dirname(crawler_app.__file__)
-    rel_folder = os.path.join('db', 'blue_yellow.sqlite')
+    rel_folder = os.path.join('db', 'crawler.sqlite')
 
     db_file = os.path.join(top_folder, rel_folder)
     DbSessionFactory.global_init(db_file)
@@ -78,7 +79,7 @@ def add_controller_routes(config, ctrl, prefix):
     config.add_handler(prefix + 'ctrl_index/', '/' + prefix + '/', handler=ctrl, action='index')
     config.add_handler(prefix + 'ctrl', '/' + prefix + '/{action}', handler=ctrl)
     config.add_handler(prefix + 'ctrl/', '/' + prefix + '/{action}/', handler=ctrl)
-    # config.add_handler(prefix + 'ctrl_id', '/' + prefix + '/{action}/{id}', handler=ctrl) # possibly remove this as no login yet
+    config.add_handler(prefix + 'ctrl_id', '/' + prefix + '/{action}/{id}', handler=ctrl) # possibly remove this as no login yet
 
 
 def init_includes(config):

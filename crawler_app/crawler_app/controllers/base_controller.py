@@ -2,8 +2,8 @@ import pyramid.renderers
 import pyramid.httpexceptions as exc
 
 from crawler_app.infrastructure.supressor import suppress
-# import crawler_app.infrastructure.cookie_auth as cookie_auth
-# from crawler_app.services.account_service import AccountService
+import crawler_app.infrastructure.cookie_auth as cookie_auth
+from crawler_app.services.account_service import AccountService
 
 
 class BaseController:
@@ -13,9 +13,9 @@ class BaseController:
         impl = layout_render.implementation()
         self.layout = impl.macros['layout']
 
-    # @property
-    # def is_logged_in(self):
-    #     return False
+    @property
+    def is_logged_in(self):
+        return False
 
     # noinspection PyMethodMayBeStatic
     @suppress()

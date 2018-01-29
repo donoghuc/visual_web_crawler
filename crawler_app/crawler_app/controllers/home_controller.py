@@ -25,19 +25,19 @@ class HomeController(BaseController):
         vm = SigninViewModel()
         vm.from_dict(self.data_dict)
 
-        account = AccountService.get_authenticated_account(vm.email, vm.password)
+        account = AccountService.get_authenticated_account(vm.username, vm.password)
         if not account:
-            vm.error = "Email address or password are incorrect."
+            vm.error = "username address or password are incorrect."
             return vm.to_dict()
 
         cookie_auth.set_auth(self.request, account.id)
 
-        return self.redirect('/')
+        return self.redirect('/home')
 
     @pyramid_handlers.action()
     def logout(self):
         cookie_auth.logout(self.request)
-        self.redirect('/')
+        self.redirect('/home')
 
     @pyramid_handlers.action(renderer='templates/account/register.pt',
                              request_method='GET',
@@ -57,17 +57,15 @@ class HomeController(BaseController):
         if vm.error:
             return vm.to_dict()
 
-        account = AccountService.find_account_by_email(vm.email)
+        account = AccountService.find_account_by_username(vm.username)
         if account:
-            vm.error = "An account with this email already exists. " \
+            vm.error = "An account with this username already exists. " \
                        "Please log in instead."
             return vm.to_dict()
 
-        account = AccountService.create_account(vm.email, vm.password)
-        print("Registered new user: " + account.email)
-
-        # send welcome email
+        account = AccountService.create_account(vm.username, vm.password)
+        print("Registered new user: " + account.username)
 
         # redirect
         print("Redirecting to account index page...")
-        self.redirect('/')
+        self.redirect('/home/signin')
