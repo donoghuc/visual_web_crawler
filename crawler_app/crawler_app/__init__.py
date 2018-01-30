@@ -19,7 +19,11 @@ from pyramid.config import Configurator
 
 import crawler_app
 import crawler_app.controllers.home_controller as home
+
 from crawler_app.data.dbsession import DbSessionFactory
+
+import crawler_app.controllers.search_controller as search
+
 # from crawler_app.services.log_service import LogService
 
 dev_mode = False
@@ -70,6 +74,7 @@ def init_routing(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_handler('root', '/', handler=home.HomeController, action='index')
     add_controller_routes(config, home.HomeController, 'home')
+    add_controller_routes(config, search.SearchController, 'search')
     config.scan()
 
 

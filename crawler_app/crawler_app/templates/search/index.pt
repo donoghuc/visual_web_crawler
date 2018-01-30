@@ -1,0 +1,51 @@
+<div metal:use-macro="view.layout">
+    <div metal:fill-slot="main_content">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h1 class="text-light">New Search</h1>
+                    <form method="POST" action="">
+                      <div class="form-group row">
+                        <label for="inputUrl" class="col-sm-2 col-form-label text-light">Url</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" id="inputUrl" placeholder="Url">
+                        </div>
+                      </div>
+                      <fieldset class="form-group">
+                        <div class="row">
+                          <legend class="col-form-label col-sm-2 pt-0 text-light">Search Type</legend>
+                          <div class="col-sm-10">
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="search_type" id="radioSearch1" value="bfs" checked>
+                              <label class="form-check-label text-light" for="radioSearch1">
+                                Breadth-first search
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="search_type" id="radioSearch2" value="dfs">
+                              <label class="form-check-label text-light" for="radioSearch2">
+                                Depth-first search
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </fieldset>
+                      <div class="form-group row">
+                        <label for="inputDepth" class="col-sm-2 col-form-label text-light">Depth</label>
+                        <div class="col-sm-10">
+                          <input type="number" class="form-control" id="inputDepth" min="1" value="1">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-sm-10">
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>
