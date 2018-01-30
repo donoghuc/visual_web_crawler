@@ -178,7 +178,7 @@ p {
   }
 }
 
-@media (min-width: 992px) {
+/*@media (min-width: 992px) {
   .product-item .product-item-title {
     position: relative;
     z-index: 1;
@@ -218,7 +218,7 @@ p {
     width: 50%;
     font-size: 1.1rem;
   }
-}
+}*/
 
 .address strong {
   font-size: 1.2rem;
@@ -256,3 +256,22 @@ p {
 .font-weight-light {
   font-weight: 100 !important;
 }
+
+
+/*form.standard-form input{
+    color: black;
+}*/
+
+/*.standard-form input,
+.standard-form textarea
+{
+     max-width: 350px;
+}*/
+.standard-form textarea {
+    margin-left: 10px;
+}
+
+.standard-form input, .standard-form button {
+    margin: 10px;
+}
+

@@ -1,0 +1,27 @@
+<div metal:use-macro="view.layout">
+  <div metal:fill-slot="main_content">
+    <section class="page-section clearfix">
+      <div class="container">
+
+        <div class="intro-text text-center bg-faded p-5 rounded">
+          <h2 class="section-heading mb-4">
+            <span class="section-heading-upper">Caelum</span>
+            <span class="section-heading-lower">register</span>
+          </h2>
+
+	      <div class="error-msg" tal:condition="error">
+	          Error: ${error}
+	      </div>
+
+	      <form class="standard-form" action="" method="POST">
+	        <input name="username" required type="text" value="${username}" placeholder="user name" class="form-control">
+	        <input name="password" required type="password" value="${password}" placeholder="password" class="form-control">
+	        <input name="confirm_password" required type="password" value="${confirm_password}" placeholder="confirm password" class="form-control">
+	        <button type="submit" class="btn btn-primary btn-xl">Register</button>
+	      </form>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
