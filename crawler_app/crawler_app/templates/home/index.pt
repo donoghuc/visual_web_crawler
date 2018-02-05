@@ -7,6 +7,38 @@
     </h1>  	
   </div>
 
+  <div metal:fill-slot="navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Caelum WC</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item active px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/home">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li tal:condition="not view.logged_in_user_id" class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/home/register">Register</a>
+            </li>
+            <li tal:condition="not view.logged_in_user_id" class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/home/signin">Sign In</a>
+            </li>
+            <li tal:condition="view.logged_in_user_id" class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/search">Crawl!</a>
+            </li>
+            <li tal:condition="view.logged_in_user_id" class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/home/logout">Log Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>  
+
   <div metal:fill-slot="main_content">
     <section class="page-section clearfix">
       <div class="container">
@@ -18,10 +50,15 @@
           </h2>
           <p class="mb-3">Lorem ipsum dolor amet literally farm-to-table wolf vinyl biodiesel kale chips pitchfork vape microdosing wayfarers authentic mixtape. Four loko tattooed squid ramps irony. Put a bird on it food truck palo santo tumeric. Brunch tousled freegan street art synth, PBR iceland disrupt hexagon flannel palo santo retro. PBR photo booth vinyl, actually banjo aesthetic live-edge direct trade fanny pack selfies sustainable tattooed chillwave.
           </p>
-          <div class="intro-button mx-auto">
-            <a class="btn btn-primary btn-xl" href="#">Register</a>
-            <a class="btn btn-primary btn-xl" href="#">Sign In</a>
+          <div tal:condition="not view.logged_in_user_id" class="intro-button mx-auto">
+            <a class="btn btn-primary btn-xl" href="/home/register">Register</a>
+            <a class="btn btn-primary btn-xl" href="/home/signin">Sign In</a>
           </div>
+
+          <div tal:condition="view.logged_in_user_id" class="intro-button mx-auto">
+            <a class="btn btn-primary btn-xl" href="/search">Crawl!</a>
+          </div>
+
         </div>
       </div>
     </section>

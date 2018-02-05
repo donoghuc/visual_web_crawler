@@ -7,4 +7,8 @@ class SearchController(BaseController):
 
     @pyramid_handlers.action(renderer='templates/search/index.pt')
     def index(self):
+        if not self.logged_in_user_id:
+            print("Cannot view account page, must login")
+            self.redirect('/home/signin')
+
         return {'value': 'SEARCH'}
