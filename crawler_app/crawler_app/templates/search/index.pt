@@ -30,5 +30,27 @@
         </div>
       </div>
     </section>
+
+    <section class="page-section clearfix" tal:condition="previous_searches">
+      <div class="container">
+
+        <div class="intro-text text-center bg-faded p-5 rounded">
+          <h2 class="section-heading mb-4">
+            <span class="section-heading-upper">Caelum</span>
+            <span class="section-heading-lower">Previous Search</span>
+          </h2>
+
+	      <form class="standard-form" action="" method="POST">
+          <div class="form-group">
+            <select name="search_id" class="form-control">
+              <option tal:repeat="search previous_searches" tal:content="search.url" tal:attributes="value search.id">None</option>
+            </select>
+          </div>
+	        <button type="submit" class="btn btn-primary btn-xl">Search</button>
+	      </form>
+
+        </div>
+      </div>
+    </section>
   </div>
 </div>
