@@ -11,4 +11,5 @@ class SearchController(BaseController):
             print("Cannot view account page, must login")
             self.redirect('/home/signin')
 
-        return {'value': 'SEARCH'}
+        return {'previous_searches': [{'id': '12345', 'url': 'www.google.com'},
+                                      {'id': '12346', 'url': 'www.yahoo.com'}]}
