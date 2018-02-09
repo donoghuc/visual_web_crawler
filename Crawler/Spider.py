@@ -5,6 +5,8 @@ from helpers import validate_url, is_valid, remove_duplicates
 import requests
 from collections import deque
 
+#need to switch over to queue for threading
+
 # can set the max urls based on the depth chosen on website?
 # just using 10 to test right now 
 MAX_URLS = 10
