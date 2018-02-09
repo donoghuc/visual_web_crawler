@@ -1,0 +1,8 @@
+###
+# replace old python version with miniconda distro
+##
+- name: use miniconda python
+  hosts: init_mini_conda
+  user: "{{ deploy_user }}"
+  roles:
+    - init_mini_conda

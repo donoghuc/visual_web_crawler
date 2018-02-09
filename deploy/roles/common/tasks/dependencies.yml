@@ -1,0 +1,32 @@
+##
+# handles app dependencies and virtualenv
+#
+
+- name:
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  become: true
+  with_items:
+    - python3-venv
+    - python3-pip
+
+
+- name: check if virtualenv is created
+  stat:
+    path: "{{ venv_dir }}"
+  register: venv_created
+
+
+- name: create virtualenv if it does not exist
+  shell: "pip install virtualenv; virtualenv -p /usr/local/anaconda/bin/python --no-site-packages {{ venv_dir }}"
+  when: not venv_created.stat.exists
+
+
+- name: create virtualenv if it does not exist
+  shell: "pip install virtualenv; virtualenv -p /usr/local/anaconda/bin/python --no-site-packages {{ venv_dir }}"
+  when: not venv_created.stat.exists
+
+
+- name: use pip3 to install project dependencies
+  shell: "cd {{ sub_app_dir }}; {{ venv_dir }}/bin/pip3 install --upgrade -e ."
