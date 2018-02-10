@@ -4,11 +4,10 @@ from Graph import Graph, Page_Node
 from helpers import validate_url, is_valid, remove_duplicates
 import requests
 from collections import deque
-
-#need to switch over to queue for threading
+import sys
 
 # can set the max urls based on the depth chosen on website?
-# just using 10 to test right now 
+# just using 10 to test right now
 MAX_URLS = 10
 
 class Spider:
@@ -171,7 +170,7 @@ class Spider:
         # print nodes dict
         print("\n--------Page Nodes--------" )
         for node in self.graph.nodes:
-            node.jsonify()
+            node.printdict()
         # print the graph edges
         if self.graph.edges:
             print("\n-----Graph Edges-----")
@@ -185,5 +184,8 @@ class Spider:
     def end_crawl(self):
         self.print_data()
         #self.driver.close()
-  
+
+if __name__ == "__main__":
+    #Spider(url, search_type, depth limit)
+    Spider(sys.argv[1], sys.argv[2], sys.argv[3])
 

@@ -24,12 +24,13 @@ class Page_Node:
         self.parent_node = parent_node
         
         
-    def jsonify(self):
-        return pprint.pprint(dict({'id': self.id,
+    def printdict(self):
+       pprint.pprint(dict({'id': self.id,
                             'parent': self.parent_node,
                             'node depth': self.node_depth,
                             'title': self.title,
                             'url': self.url}))
+
         
 class Edge:
     __slots__ = ['parent', 'target']
