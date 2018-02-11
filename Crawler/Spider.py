@@ -30,11 +30,14 @@ class Spider:
     
     # generate soup
     def get_soup(self, url):
-        response = requests.get(url)
-        # lxml faster than html_parser..?
-        data = response.text
-        soup = BeautifulSoup(data, "lxml")
-        return soup
+        try:
+            response = requests.get(url)
+            # lxml faster than html_parser..?
+            data = response.text
+            soup = BeautifulSoup(data, "lxml")
+            return soup
+        except:
+            return None
         '''
         #if using selenium:
         self.driver.get(url)
@@ -44,19 +47,24 @@ class Spider:
     # parse soup to get links
     def get_links(self, url):
         soup = self.get_soup(url)
-        urls = set()
-        for link in soup.findAll('a'):
-            if self.havent_visited(link):
-                urls.add(link.get('href'))
-        return urls
-
+        if soup:
+            urls = set()
+            for link in soup.findAll('a'):
+                if self.havent_visited(link):
+                    urls.add(link.get('href'))
+            return urls
+        else:
+            return None
 
     # parse soup for page title
     def get_page_title(self, url):
         soup = self.get_soup(url)
-        title = soup.title
-        if title is not None:
-            return title.get_text()
+        if soup:
+            title = soup.title
+            if title is not None:
+                return title.get_text()
+        else:
+            return None
     
     def havent_visited(self, url):
         if url not in self.visited_set and url not in self.to_visit:
@@ -96,11 +104,14 @@ class Spider:
         if not crawled:
             # generate soup and get links
             links = self.get_links(node.url)
-            links = validate_url(links, self.count, MAX_URLS)
-            # remove any duplicate links present
-            links = remove_duplicates(links)
-            if len(links) > 0:
-                self.crawl(node, links)
+            if links:
+                links = validate_url(links, self.count, MAX_URLS)
+                # remove any duplicate links present
+                links = remove_duplicates(links)
+                if len(links) > 0:
+                    self.crawl(node, links)
+                else:
+                    self.get_next()
             else:
                 self.get_next()
         else:
