@@ -51,8 +51,8 @@
             </label>
           </div>
           <br />
-
-	        <button type="submit" class="btn btn-primary btn-xl">Search</button>
+          <a class="btn btn-primary btn-xl" href="/graph">Crawl!</a>
+	        <!-- <button type="submit" class="btn btn-primary btn-xl">Search</button> -->
 	      </form>
 
         </div>
@@ -74,7 +74,8 @@
               <option tal:repeat="search previous_searches" tal:content="search.url" tal:attributes="value search.id">None</option>
             </select>
           </div>
-	        <button type="submit" class="btn btn-primary btn-xl">Search</button>
+	        <!-- <button type="submit" class="btn btn-primary btn-xl">Search</button> -->
+          <a class="btn btn-primary btn-xl" href="/graph">Crawl!</a>
 	      </form>
 
         </div>
