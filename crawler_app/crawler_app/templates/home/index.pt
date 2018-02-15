@@ -4,7 +4,7 @@
     <h1 class="site-heading text-center text-white d-none d-lg-block">
       <span class="site-heading-upper text-primary mb-3">Caelum Visual Web Crawler</span>
       <span class="site-heading-lower">Explore The Web</span>
-    </h1>  	
+    </h1>   
   </div>
 
   <div metal:fill-slot="navigation">
@@ -48,7 +48,13 @@
             <span class="section-heading-upper">Caelum</span>
             <span class="section-heading-lower">visual web crawler</span>
           </h2>
-          <p class="mb-3">Lorem ipsum dolor amet literally farm-to-table wolf vinyl biodiesel kale chips pitchfork vape microdosing wayfarers authentic mixtape. Four loko tattooed squid ramps irony. Put a bird on it food truck palo santo tumeric. Brunch tousled freegan street art synth, PBR iceland disrupt hexagon flannel palo santo retro. PBR photo booth vinyl, actually banjo aesthetic live-edge direct trade fanny pack selfies sustainable tattooed chillwave.
+          <p class="mb-3">Hyperlinks facilitate the redirection of one web resource to another. Links are an integral part of how users experience the web as it provides the path through the vast quantity of online resources. 
+          </p>
+          <p class="mb-3">The Caelum Web Crawler is a tool to allow a curious user to explore the links emanating from their favorite web page. Sign up for our FREE NO STRINGS ATTCHED service you will be able to provide a URL of interest and see the path of links in an interactive visualization!   
+          </p>
+          <p class="mb-3">We provide the option to crawl the web in a breadth first or depth first manor. The breadth first option will explore ALL the links from each level of the node of interest before moving down to the next level. The depth first search will explore links in a given chain down as many levels as possible before exploring a new chain. 
+          </p>
+          <p class="mb-3">The visualizations provide a unique and informative view of real world websites for users to explore the differences between depth first and breadth first traversals.  So sign up for an account or start a new search! 
           </p>
           <div tal:condition="not view.logged_in_user_id" class="intro-button mx-auto">
             <a class="btn btn-primary btn-xl" href="/home/register">Register</a>
@@ -74,7 +80,7 @@
                 <div class="row">
 
                     <div class="col-sm-4 band-members">
-                        <img src="/static/img/cas.png" class="img-fluid rounded-circle"/>
+                        <img src="/static/img/cas_1.png" class="img-fluid rounded-circle"/>
                         <br>
                         <span>Cas Donoghue</span>
                     </div>
@@ -90,7 +96,7 @@
                     </div>
                 </div>
                 <h4 class="mt-3">Cas Donoghue</h4>
-                <p>Lorem ipsum dolor amet literally farm-to-table wolf vinyl biodiesel kale chips pitchfork vape microdosing wayfarers authentic mixtape. Four loko tattooed squid ramps irony.
+                <p>I started the OSU post bacc CS degree in winter 2015 while working full time as a researcher at Sarepta Therapeutics. My experience using bioinformatics software and data management platforms for molecular biology research inspired me to leave the biotech lab in 2017 for an opportunity to intern at Oracle in the (Software/Hardware) Test Engineering group. As I wrap up the last semester at OSU (expected graduation march 2018!) I am seeking the opportunity to gain more professional experience with distributed systems, dev-ops and security in the technology industry. 
                 </p>
                 <h4>David Hartman</h4>
                 <p>Lorem ipsum dolor amet literally farm-to-table wolf vinyl biodiesel kale chips pitchfork vape microdosing wayfarers authentic mixtape. Four loko tattooed squid ramps irony.
