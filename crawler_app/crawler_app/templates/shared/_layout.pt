@@ -19,7 +19,8 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/business-casual.css" rel="stylesheet">
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+    <script src="static/javascript/d3.v4.min.js"></script>
     <div metal:define-slot="additional_css"></div>
 
   </head>
