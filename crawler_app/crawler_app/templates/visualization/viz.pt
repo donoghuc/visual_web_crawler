@@ -1,0 +1,186 @@
+<div metal:use-macro="view.layout">
+
+
+  <div metal:fill-slot="navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Caelum WC</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/home">Home
+              </a>
+            </li>
+            <li class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/search">Crawl!</a>
+            </li>
+            <li class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/home/logout">Log Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>  
+
+
+
+  <div metal:fill-slot="main_content"> 
+
+
+   <section class="page-section cta">
+
+          <div class="col-xl-12 mx-auto text-center">
+
+
+                <div class="col-sm-12 band-members">
+
+<div>
+      <style>
+
+          .node {
+            cursor: pointer;
+          }
+
+          .node:hover {
+            stroke: #000;
+            stroke-width: 1.5px;
+          }
+
+          .node--leaf {
+            fill: white;
+          }
+
+          .label {
+            font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+            text-anchor: middle;
+            text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+          }
+
+          .label,
+          .node--root,
+          .node--leaf {
+            pointer-events: none;
+          }
+
+          </style>
+
+          <h1>Node: <span id="parent_url"></span></h1>
+
+          <svg width="740" height="740"></svg>
+
+          <h1>Child: <span id="child_url"></span></h1>
+
+          <script id="search_json" type="application/json">
+          ${crawl_result}
+          </script>
+
+      <!-- https://bl.ocks.org/mbostock/7607535 -->
+          <script>
+
+          var svg = d3.select("svg"),
+              margin = 20,
+              diameter = +svg.attr("width"),
+              g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+          var color = d3.scaleLinear()
+              .domain([-1, 5])
+              .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
+              .interpolate(d3.interpolateHcl);
+
+          var pack = d3.pack()
+              .size([diameter - margin, diameter - margin])
+              .padding(2);
+
+          root = JSON.parse(document.getElementById("search_json").textContent);
+
+          root = d3.hierarchy(root)
+              .sum(function(d) {
+                if (!('children' in d)) {
+                  return 1;
+                }
+              })
+              .sort(function(a, b) { return b.value - a.value; });
+
+          var focus = root,
+              nodes = pack(root).descendants(),
+              view;
+
+          var circle = g.selectAll("circle")
+            .data(nodes)
+            .enter().append("circle")
+              .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+              .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+              .on("mouseover", function(d) {document.getElementById('child_url').textContent = d['data']['url']; })
+              .on("mouseout", function(d) {document.getElementById('child_url').textContent = ""; })
+              .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+
+          var text = g.selectAll("text")
+            .data(nodes)
+            .enter().append("text")
+              .attr("class", "label")
+              .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0; })
+              .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
+              .text(function(d) { return d.data.domain; });
+
+          var node = g.selectAll("circle,text");
+
+          svg
+              .style("background", color(-1))
+              .on("click", function() { zoom(root); });
+
+          zoomTo([root.x, root.y, root.r * 2 + margin]);
+          document.getElementById('parent_url').textContent = root['data']['url'];
+
+          function zoom(d) {
+            document.getElementById('parent_url').textContent = d['data']['url'];
+            var focus0 = focus; focus = d;
+
+            var transition = d3.transition()
+                .duration(d3.event.altKey ? 7500 : 750)
+                .tween("zoom", function(d) {
+                  var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
+                  return function(t) { zoomTo(i(t)); };
+                });
+
+            transition.selectAll("text")
+              .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+                .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0; })
+                .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+                .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+
+            transition.selectAll("circle")
+              .filter(function(d) { return (d.parent === focus || this.style.pointerEvents === "auto" ) && this.classList.contains("node--leaf"); })
+              .style("pointer-events", function(d) { return d.parent === focus ? "auto" : "none"; });
+          }
+
+          function zoomTo(v) {
+            var k = diameter / v[2]; view = v;
+            node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
+            circle.attr("r", function(d) { return d.r * k; });
+          }
+
+          </script>
+
+        </div>
+
+
+  
+
+
+                </div>
+
+          </div>
+
+ </section>
+
+
+
+
+
+    </div>
+
+</div>

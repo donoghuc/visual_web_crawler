@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/business-casual.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <div metal:define-slot="additional_css"></div>
 
   </head>
@@ -47,6 +48,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <div metal:define-slot="additional_js"></div>
   </body>
 
