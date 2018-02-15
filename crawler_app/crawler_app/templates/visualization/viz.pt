@@ -45,7 +45,9 @@
             </script>
 
             <!-- https://bl.ocks.org/mbostock/7607535 -->
+            <script src="/static/javascript/d3.v4.min.js"></script>
             <script src="/static/javascript/david_graph.js"></script>
+
 
           </div>
         </div>
@@ -55,7 +57,7 @@
 
 
   <div metal:fill-slot="additional_js">
-    <script src="static/javascript/d3.v4.min.js"></script>
+    <script src="/static/javascript/d3.v4.min.js"></script>
   </div>
 </div>
 
