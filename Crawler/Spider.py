@@ -1,10 +1,11 @@
-#from selenium import webdriver
 from bs4 import BeautifulSoup
 from Graph import Graph, Page_Node
 from helpers import validate_url, is_valid, remove_duplicates
 import requests
 from collections import deque
 import sys
+import lxml.html
+from lxml import etree
 
 # can set the max urls based on the depth chosen on website?
 # just using 10 to test right now
@@ -22,41 +23,50 @@ class Spider:
         self.visited_set = set()   # set of urls already crawled
         self.graph = Graph()
         self.id = 0
-        self.url_graph = dict() # store graph/node info
         self.start_page = self.get_page_title(seed_url)
         root_node = Page_Node(seed_url, None, self.start_page, 0, None, 0)
         self.start(root_node)
         
     
     # generate soup
+    '''
     def get_soup(self, url):
         response = requests.get(url)
         # lxml faster than html_parser..?
         data = response.text
         soup = BeautifulSoup(data, "lxml")
         return soup
-        '''
+        
         #if using selenium:
         self.driver.get(url)
         soup = BeautifulSoup(self.driver.page_source, "lxml")
         return soup
         '''
-    # parse soup to get links
-    def get_links(self, url):
-        soup = self.get_soup(url)
-        urls = set()
-        for link in soup.findAll('a'):
+    # parse to get links
+    def get_links(self, url, content):
+        links_set = set()
+        try:
+            etree = lxml.html.fromstring(content)
+        except lxml.etree.ParserError:
+            return links_set
+
+        hrefs_list = etree.xpath('//a')
+        for href in hrefs_list:
+            link = href.get('href')
+            if link is None:
+                continue
             if self.havent_visited(link):
-                urls.add(link.get('href'))
-        return urls
+                links_set.add(link)
 
+        return links_set
 
-    # parse soup for page title
+    # get the page title
     def get_page_title(self, url):
-        soup = self.get_soup(url)
-        title = soup.title
+        res = requests.get(url)
+        tree = lxml.html.fromstring(res.content)
+        title = tree.findtext('.//title')
         if title is not None:
-            return title.get_text()
+            return title
     
     def havent_visited(self, url):
         if url not in self.visited_set and url not in self.to_visit:
@@ -95,7 +105,8 @@ class Spider:
             node.parent_node = source_node.id
         if not crawled:
             # generate soup and get links
-            links = self.get_links(node.url)
+            res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'})
+            links = self.get_links(node.url, res.content)
             links = validate_url(links, self.count, MAX_URLS)
             # remove any duplicate links present
             links = remove_duplicates(links)
@@ -121,7 +132,8 @@ class Spider:
                 self.graph.add_edge(source_node.id, node.id)
             node.parent_node = source_node.id
         if not crawled:
-            links = self.get_links(node.url)
+            res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'})
+            links = self.get_links(node.url, res.content)
             links = validate_url(links, self.count, MAX_URLS)
             links = remove_duplicates(links)
             if len(links) > 0:
@@ -150,7 +162,6 @@ class Spider:
                 current_node.parents_list.append(current_url)
                 # add to the end of the to_visit list
                 self.to_visit.append(current_node)
-                self.url_graph[link] = current_node
         self.get_next()
 
     def get_next(self):
@@ -183,9 +194,7 @@ class Spider:
 
     def end_crawl(self):
         self.print_data()
-        #self.driver.close()
 
 if __name__ == "__main__":
-    #Spider(url, search_type, depth limit)
     Spider(sys.argv[1], sys.argv[2], sys.argv[3])
-
+#run: python Spider.py http://www.etsy.com BFS 0
