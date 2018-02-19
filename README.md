@@ -1,5 +1,12 @@
 # visual web crawler
-Repo for capstone project 
+Repo for capstone project
+```
+visual_web_crawler
+|-Crawler       Implementation of crawler algorithm (DEV)
+|-crawler_app   web application code [PROD]
+|-deploy        ansible code for deploying to server
+|-[dev files]   Jupyter notebook sprints, dev requirements, etc
+```
 
 ### installation
 - make sure you have python3, virtualenv (pip install virtualenv), and Firefox installed 
