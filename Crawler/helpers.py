@@ -10,13 +10,18 @@ def validate_url(links, count, total):
 
 def is_valid(url):
     parsed = urlparse(url)
-    try: return parsed.scheme
-    except: return False 
-    url = delete_slash(url)
-    url = complete_url(url)
-    if not url.startswith("http"):
-        return False
-    return True
+    if parsed.scheme:
+        url = delete_slash(url)
+        url = complete_url(url)
+        if is_allowed(url)==True:
+            return True
+    return False
+
+def is_allowed(url):
+    excluded_list = ['mailto:', '.css', '.js', 'favicon', '.jpg', '.jpeg', '.gif', '.pdf', '.doc', '?', '#']
+    if not any(word in url for word in excluded_list):
+        return True
+    return False
 
 def complete_url(url):
     if not url.startswith('http'):
@@ -24,10 +29,9 @@ def complete_url(url):
     return url
 
 def delete_slash(url):
-    if url[len(url) - 1] == '/':
-        return url[0:len(url) - 1]
-    else:
-        return url
+    if url.startswith('//'):
+        url = url[2:]
+    return url
     
 def remove_duplicates(values):
     list = []
