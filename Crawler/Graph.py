@@ -14,14 +14,16 @@ class Graph:
         self.edges.append(edge)
 
 class Page_Node:
-    __slots__ =('url', 'parents_list', 'title', 'parent_node', 'id', 'node_depth')
-    def __init__(self, url, parents_list, title, node_depth, id = None, parent_node=None):
+    __slots__ =('url', 'parents_list', 'title', 'parent_node', 'id', 'node_depth', 'keyword', 'found')
+    def __init__(self, url, parents_list, title, node_depth, id = None, parent_node = None, keyword = None):
         self.url = url
         self.parents_list = parents_list
         self.title = title
         self.node_depth = int(node_depth)
         self.id = id
         self.parent_node = parent_node
+        self.keyword = keyword
+        self.found = False
         
         
     def printdict(self):
@@ -29,7 +31,8 @@ class Page_Node:
                             'parent': self.parent_node,
                             'node depth': self.node_depth,
                             'title': self.title,
-                            'url': self.url}))
+                            'url': self.url,
+                            'keyword found': self.found}))
 
         
 class Edge:

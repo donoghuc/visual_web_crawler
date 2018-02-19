@@ -6,16 +6,20 @@ from collections import deque
 import sys
 import lxml.html
 from lxml import etree
+import re
 
 # can set the max urls based on the depth chosen on website?
 # just using 10 to test right now
 MAX_URLS = 10
 
+kword_regex = re.compile(r'''>(?P<keyword>[^<]+?)<''', re.IGNORECASE)
+
 class Spider:
-    def __init__(self, seed_url, search_type, limit):
+    def __init__(self, seed_url, search_type, limit, keyword=None):
         #self.driver = webdriver.Firefox()
         self.seed_url = seed_url
         self.search_type = search_type # 'BFS' or 'DFS'
+        self.keyword = keyword
         self.count = 0
         self.limit = int(limit) # number of pages to crawl (number of nodes)
         self.depth = 0 # used for DFS
@@ -24,8 +28,10 @@ class Spider:
         self.graph = Graph()
         self.id = 0
         self.start_page = self.get_page_title(seed_url)
-        root_node = Page_Node(seed_url, None, self.start_page, 0, None, 0)
+        root_node = Page_Node(seed_url, None, self.start_page, 0, None, 0, False)
         self.start(root_node)
+        self.end = False
+    
         
     
     # generate soup
@@ -73,6 +79,17 @@ class Spider:
             return True
         else: return False
 
+    
+    def find_keyword(self, page, find_word):
+        content = str(page)
+        for word in kword_regex.finditer(content):
+            words = str(word.group())
+            if find_word in words:
+                return True
+
+        return False
+    
+
     #  start the crawling
     def start(self, node):
         self.to_visit.clear()
@@ -86,7 +103,7 @@ class Spider:
     #BFS
     def bfs_crawl(self, node):
         # check that the url has not be crawled
-        crawled = node.url in self.visited_set
+        crawled = node.url in self.visited_set 
         if not crawled:
             self.graph.add_node(node, self.id)
             self.count += 1
@@ -106,6 +123,10 @@ class Spider:
         if not crawled:
             # generate soup and get links
             res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'})
+            if self.keyword and self.find_keyword(res.content, self.keyword):
+                node.found = True
+                self.end = True
+                self.end_crawl()
             links = self.get_links(node.url, res.content)
             links = validate_url(links, self.count, MAX_URLS)
             # remove any duplicate links present
@@ -133,6 +154,10 @@ class Spider:
             node.parent_node = source_node.id
         if not crawled:
             res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'})
+            if self.keyword and self.find_keyword(res.content, self.keyword):
+                node.found = True
+                self.end = True
+                self.end_crawl()
             links = self.get_links(node.url, res.content)
             links = validate_url(links, self.count, MAX_URLS)
             links = remove_duplicates(links)
@@ -157,7 +182,7 @@ class Spider:
         for link in links:
             if link not in self.visited_set:
                 title = self.get_page_title(link)
-                current_node = Page_Node(link, [current_url], title, self.depth)
+                current_node = Page_Node(link, [current_url], title, self.depth, self.keyword)
                 # add url to end of list source nodes list
                 current_node.parents_list.append(current_url)
                 # add to the end of the to_visit list
@@ -194,7 +219,9 @@ class Spider:
 
     def end_crawl(self):
         self.print_data()
+        if self.end == True:
+            exit(0)
 
 if __name__ == "__main__":
-    Spider(sys.argv[1], sys.argv[2], sys.argv[3])
+    Spider(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
 #run: python Spider.py http://www.etsy.com BFS 0
