@@ -12,7 +12,7 @@ import re
 # just using 10 to test right now
 MAX_URLS = 10
 
-kword_regex = re.compile(r'''>(?P<keyword>[^<]+?)<''', re.IGNORECASE)
+kword_regex = re.compile(r'''>(?P<keyword>[^<]+?)<''', re.IGNORECASE | re.DOTALL)
 
 class Spider:
     def __init__(self, seed_url, search_type, limit, keyword=None):
@@ -31,8 +31,6 @@ class Spider:
         root_node = Page_Node(seed_url, None, self.start_page, 0, None, 0, False)
         self.start(root_node)
         self.end = False
-    
-        
     
     # generate soup
     '''
@@ -224,4 +222,4 @@ class Spider:
 
 if __name__ == "__main__":
     Spider(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-#run: python Spider.py http://www.etsy.com BFS 0
+#run: python Spider.py http://www.etsy.com BFS 0 keyword
