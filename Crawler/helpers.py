@@ -1,4 +1,7 @@
 from urllib.parse import urlparse
+from lxml import html
+from lxml.html.clean import Cleaner
+import re
 
 def validate_url(links, count, total):
     validated = []
@@ -10,7 +13,7 @@ def validate_url(links, count, total):
 
 def is_valid(url):
     parsed = urlparse(url)
-    if parsed.scheme:
+    if parsed.scheme and parsed.netloc:
         url = delete_slash(url)
         url = complete_url(url)
         if is_allowed(url)==True:
@@ -18,7 +21,7 @@ def is_valid(url):
     return False
 
 def is_allowed(url):
-    excluded_list = ['mailto:', '.css', '.js', 'favicon', '.jpg', '.jpeg', '.gif', '.pdf', '.doc', '?', '#']
+    excluded_list = ['mailto:', '.css', '.js', 'favicon', '.jpg', '.jpeg', '.gif', '.pdf', '.doc', '?', '#', 'tell:']
     if not any(word in url for word in excluded_list):
         return True
     return False
@@ -40,6 +43,22 @@ def remove_duplicates(values):
         if value not in seen:
             list.append(value)
             seen.add(value)
-    return list 
+    return list
+
+CLEAN_HTML = Cleaner(**{
+                     'scripts': True,
+                     'style': True,
+                     'inline_style': True,
+                     'meta': True,
+                     'embedded': True,
+                     'comments': True
+})
+
+def to_text(content):
+    cleaned = CLEAN_HTML.clean_html(content)
+    text = html.fromstring(cleaned).text_content()
+    text = re.sub(r'/\s+/g', ' ', text).strip()
+    return text
+
 
 

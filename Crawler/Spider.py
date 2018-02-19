@@ -1,6 +1,6 @@
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 from Graph import Graph, Page_Node
-from helpers import validate_url, is_valid, remove_duplicates
+from helpers import validate_url, is_valid, remove_duplicates, to_text
 import requests
 from collections import deque
 import sys
@@ -12,7 +12,6 @@ import re
 # just using 10 to test right now
 MAX_URLS = 10
 
-kword_regex = re.compile(r'''>(?P<keyword>[^<]+?)<''', re.IGNORECASE | re.DOTALL)
 
 class Spider:
     def __init__(self, seed_url, search_type, limit, keyword=None):
@@ -80,15 +79,11 @@ class Spider:
 
     
     def find_keyword(self, page, find_word):
-        content = str(page)
-        for word in kword_regex.finditer(content):
-            words = str(word.group())
-            if find_word in words:
-                return True
-
+        content = to_text(page)
+        if find_word in content:
+            return True
         return False
     
-
     #  start the crawling
     def start(self, node):
         self.to_visit.clear()
