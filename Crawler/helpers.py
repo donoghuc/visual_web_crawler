@@ -13,7 +13,7 @@ def validate_url(links, count, total):
 
 def is_valid(url):
     parsed = urlparse(url)
-    if parsed.scheme and parsed.netloc:
+    if parsed.scheme:
         url = delete_slash(url)
         url = complete_url(url)
         if is_allowed(url)==True:
@@ -45,17 +45,15 @@ def remove_duplicates(values):
             seen.add(value)
     return list
 
-CLEAN_HTML = Cleaner(**{
-                     'scripts': True,
-                     'style': True,
-                     'inline_style': True,
-                     'meta': True,
-                     'embedded': True,
-                     'comments': True
-})
+cleaner = Cleaner(scripts=True,
+                     style=True,
+                     inline_style=True,
+                     meta=True,
+                     embedded=True,
+                     comments=True)
 
 def to_text(content):
-    cleaned = CLEAN_HTML.clean_html(content)
+    cleaned = cleaner.clean_html(content)
     text = html.fromstring(cleaned).text_content()
     text = re.sub(r'/\s+/g', ' ', text).strip()
     return text

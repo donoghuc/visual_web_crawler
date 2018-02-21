@@ -5,7 +5,6 @@ import requests
 from collections import deque
 import sys
 import lxml.html
-from lxml import etree
 import re
 
 # can set the max urls based on the depth chosen on website?
@@ -50,11 +49,11 @@ class Spider:
     def get_links(self, url, content):
         links_set = set()
         try:
-            etree = lxml.html.fromstring(content)
-        except lxml.etree.ParserError:
+            tree = lxml.html.fromstring(content)
+        except lxml.tree.ParserError:
             return links_set
 
-        hrefs_list = etree.xpath('//a')
+        hrefs_list = tree.xpath('//a')
         for href in hrefs_list:
             link = href.get('href')
             if link is None:
@@ -66,7 +65,7 @@ class Spider:
 
     # get the page title
     def get_page_title(self, url):
-        res = requests.get(url)
+        res = requests.get(url, timeout=10)
         tree = lxml.html.fromstring(res.content)
         title = tree.findtext('.//title')
         if title is not None:
@@ -118,7 +117,7 @@ class Spider:
             node.parent_node = source_node.id
         if not crawled:
             # generate soup and get links
-            res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'})
+            res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'}, timeout=10)
             if self.keyword and self.find_keyword(res.content, self.keyword):
                 node.found = True
                 self.stop_crawl = True
@@ -149,7 +148,7 @@ class Spider:
                 self.graph.add_edge(source_node.id, node.id)
             node.parent_node = source_node.id
         if not crawled:
-            res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'})
+            res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'}, timeout=10)
             if self.keyword and self.find_keyword(res.content, self.keyword):
                 node.found = True
                 self.stop_crawl = True
