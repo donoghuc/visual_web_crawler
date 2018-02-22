@@ -29,26 +29,18 @@
         </div>
       </div>
     </nav>
-  </div>  
+  </div>
 
 
-  <div metal:fill-slot="main_content"> 
-    <section class="page-section cta">
+  <div metal:fill-slot="main_content">
+    <section id="scroll_here" class="page-section cta">
       <div class="col-xl-12 mx-auto text-center">
         <div class="col-sm-12 band-members">
           <div>
-            <h1>Node: <span id="parent_url"></span></h1>
-            <svg width="740" height="740"></svg>
-            <h1>Child: <span id="child_url"></span></h1>
-            <script id="search_json" type="application/json">
-            ${crawl_result}
-            </script>
-
-            <!-- https://bl.ocks.org/mbostock/7607535 -->
-            <script src="/static/javascript/d3.v4.min.js"></script>
-            <script src="/static/javascript/david_graph.js"></script>
-
-
+            <h2>Node: <a id="parent_url" class="text-primary" target="_blank"></a></h2>
+            <svg width="100%" height="740"></svg>
+            <h2>Child: <span id="child_url"></span></h2>
+            <script id="search_json" type="application/json">${crawl_result}</script>
           </div>
         </div>
       </div>
@@ -58,6 +50,7 @@
 
   <div metal:fill-slot="additional_js">
     <script src="/static/javascript/d3.v4.min.js"></script>
+    <!-- https://bl.ocks.org/mbostock/7607535 -->
+    <script src="/static/javascript/david_graph.js"></script>
   </div>
 </div>
-
