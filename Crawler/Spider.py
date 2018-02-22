@@ -9,7 +9,7 @@ import re
 
 # can set the max urls based on the depth chosen on website?
 # just using 10 to test right now
-MAX_URLS = 10
+MAX_URLS = 20
 
 
 class Spider:
@@ -65,12 +65,16 @@ class Spider:
 
     # get the page title
     def get_page_title(self, url):
-        res = requests.get(url, timeout=10)
-        tree = lxml.html.fromstring(res.content)
-        title = tree.findtext('.//title')
-        if title is not None:
-            return title
-    
+        try:
+            res = requests.get(url, timeout=10)
+            tree = lxml.html.fromstring(res.content)
+            title = tree.findtext('.//title')
+            if title is not None:
+                return title
+        except:
+            "failed to find title"
+
+            
     def havent_visited(self, url):
         if url not in self.visited_set and url not in self.to_visit:
             return True
@@ -109,7 +113,7 @@ class Spider:
             # get the node's parent node
             source_node = node.parents_list.pop()
             # update the node depth
-            node.node_depth = source_node.node_depth
+            node.node_depth = source_node.node_depth + 1
             if node.id is not None and source_node.id is not None:
                 # create an edge between the current node and its parent node
                 self.graph.add_edge(source_node.id, node.id)
@@ -117,19 +121,22 @@ class Spider:
             node.parent_node = source_node.id
         if not crawled:
             # generate soup and get links
-            res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'}, timeout=10)
-            if self.keyword and self.find_keyword(res.content, self.keyword):
-                node.found = True
-                self.stop_crawl = True
-                self.end_crawl()
-            links = self.get_links(node.url, res.content)
-            links = validate_url(links, self.count, MAX_URLS)
-            # remove any duplicate links present
-            links = remove_duplicates(links)
-            if len(links) > 0:
-                self.crawl(node, links)
-            else:
-                self.get_next()
+            try:
+                res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'}, timeout=10)
+                if self.keyword and self.find_keyword(res.content, self.keyword):
+                    node.found = True
+                    self.stop_crawl = True
+                    self.end_crawl()
+                links = self.get_links(node.url, res.content)
+                links = validate_url(links, self.count, MAX_URLS)
+                # remove any duplicate links present
+                links = remove_duplicates(links)
+                if len(links) > 0:
+                    self.crawl(node, links)
+                else:
+                    self.get_next()
+            except:
+                print('failed request')
         else:
             self.get_next()
     
@@ -219,7 +226,7 @@ class Spider:
 
 def main():
     if len(sys.argv) == 4:
-        print(sys.argv[1], sys.argv[2], sys.argv[3])
+#
         Spider(sys.argv[1], sys.argv[2], sys.argv[3])
     else:
         Spider(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
