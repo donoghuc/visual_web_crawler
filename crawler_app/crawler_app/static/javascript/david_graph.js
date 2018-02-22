@@ -1,15 +1,18 @@
 var svg = d3.select("svg"),
     margin = 20,
-    width = svg.node().getBoundingClientRect().width,
     diameter = +svg.attr("height"),
-    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + diameter / 2 + ")");
+    g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-// Center graph on window resize
-$( window ).resize(function() {
-  width = svg.node().getBoundingClientRect().width,
-  diameter = +svg.attr("height"),
-  g.attr("transform", "translate(" + width / 2 + "," + diameter / 2 + ")");
-});
+function fixHeight() {
+  var width = svg.node().getBoundingClientRect().width;
+  if (width < diameter)
+    svg.node().setAttribute("height", width);
+  else
+    svg.node().setAttribute("height", diameter);
+}
+
+fixHeight();
+$( window ).resize(fixHeight);
 
 var color = d3.scaleLinear()
     .domain([-1, 5])
@@ -70,6 +73,9 @@ function zoom(d) {
   $("#parent_url").attr("href", d['data']['url']).text(d['data']['url']);
   var focus0 = focus; focus = d;
 
+  if (focus0 == d)
+    return;
+
   var transition = d3.transition()
       .duration(d3.event.altKey ? 7500 : 750)
       .tween("zoom", function(d) {
@@ -78,12 +84,15 @@ function zoom(d) {
       });
 
   transition.selectAll("text")
-    .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-    .style("fill-opacity", 0)
+    .style("fill-opacity", 0);
 
   transition.selectAll("circle")
     .filter(function(d) { return (d.parent === focus || this.style.pointerEvents === "auto" ) && this.classList.contains("node--leaf"); })
-    .style("pointer-events", function(d) { return d.parent === focus ? "auto" : "none"; });
+    .style("pointer-events", function(d) {
+      if (d.parent === focus || d.parent === focus.parent)
+        return "auto";
+      return "none";
+    });
 
   transition.on("end", function() { scaleAllText(focus); });
 }
@@ -98,8 +107,8 @@ function zoomTo(v) {
 // Scale all text elements
 function scaleAllText(parent) {
   d3.selectAll("text")
-    .filter(function(d) { return d.parent && (d.parent === parent); })
-    .each(function(d) { scaleText(this, d); } )
+    .filter(function(d) { return d.parent === parent || (d === parent && !d.children); })
+    .each(function(d) { scaleText(this, d); })
     .transition()
     .duration(500)
     .style("fill-opacity", 1);
