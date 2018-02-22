@@ -73,6 +73,9 @@ function zoom(d) {
   $("#parent_url").attr("href", d['data']['url']).text(d['data']['url']);
   var focus0 = focus; focus = d;
 
+  if (focus0 == d)
+    return;
+
   var transition = d3.transition()
       .duration(d3.event.altKey ? 7500 : 750)
       .tween("zoom", function(d) {
