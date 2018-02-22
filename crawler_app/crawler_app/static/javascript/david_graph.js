@@ -1,15 +1,18 @@
 var svg = d3.select("svg"),
     margin = 20,
-    width = svg.node().getBoundingClientRect().width,
     diameter = +svg.attr("height"),
-    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + diameter / 2 + ")");
+    g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-// Center graph on window resize
-$( window ).resize(function() {
-  width = svg.node().getBoundingClientRect().width,
-  diameter = +svg.attr("height"),
-  g.attr("transform", "translate(" + width / 2 + "," + diameter / 2 + ")");
-});
+function fixHeight() {
+  var width = svg.node().getBoundingClientRect().width;
+  if (width < diameter)
+    svg.node().setAttribute("height", width);
+  else
+    svg.node().setAttribute("height", diameter);
+}
+
+fixHeight();
+$( window ).resize(fixHeight);
 
 var color = d3.scaleLinear()
     .domain([-1, 5])
