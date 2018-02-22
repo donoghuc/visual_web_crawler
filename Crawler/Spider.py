@@ -72,7 +72,7 @@ class Spider:
             if title is not None:
                 return title
         except:
-            "failed to find title"
+            print("failed to find title")
 
             
     def havent_visited(self, url):
