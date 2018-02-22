@@ -102,6 +102,7 @@ class Spider:
     #BFS
     def bfs_crawl(self, node):
         # check that the url has not be crawled
+        print('crawl')
         crawled = node.url in self.visited_set 
         if not crawled:
             self.graph.add_node(node, self.id)
@@ -113,7 +114,7 @@ class Spider:
             # get the node's parent node
             source_node = node.parents_list.pop()
             # update the node depth
-            node.node_depth = source_node.node_depth + 1
+            node.node_depth = source_node.node_depth + 1 # CAS ADDED the + 1, DOES THIS MAKE SENSE?
             if node.id is not None and source_node.id is not None:
                 # create an edge between the current node and its parent node
                 self.graph.add_edge(source_node.id, node.id)
@@ -137,6 +138,7 @@ class Spider:
                     self.get_next()
             except:
                 print('failed request')
+                self.get_next()
         else:
             self.get_next()
     
