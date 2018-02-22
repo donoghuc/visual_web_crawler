@@ -178,6 +178,16 @@ p {
   }
 }
 
+@media(max-width: 768px){
+  .btn-group {
+    display: block !important;
+    width: auto !important;
+  }
+  .btn-group label {
+    border-radius: .25rem !important;
+  }
+}
+
 /*@media (min-width: 992px) {
   .product-item .product-item-title {
     position: relative;
@@ -274,4 +284,3 @@ p {
 .standard-form input, .standard-form button {
     margin: 10px;
 }
-
