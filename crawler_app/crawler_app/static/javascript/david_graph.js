@@ -78,12 +78,15 @@ function zoom(d) {
       });
 
   transition.selectAll("text")
-    .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
-    .style("fill-opacity", 0)
+    .style("fill-opacity", 0);
 
   transition.selectAll("circle")
     .filter(function(d) { return (d.parent === focus || this.style.pointerEvents === "auto" ) && this.classList.contains("node--leaf"); })
-    .style("pointer-events", function(d) { return d.parent === focus ? "auto" : "none"; });
+    .style("pointer-events", function(d) {
+      if (d.parent === focus || (!d.children))
+        return "auto";
+      return "none";
+    });
 
   transition.on("end", function() { scaleAllText(focus); });
 }
@@ -98,8 +101,8 @@ function zoomTo(v) {
 // Scale all text elements
 function scaleAllText(parent) {
   d3.selectAll("text")
-    .filter(function(d) { return d.parent && (d.parent === parent); })
-    .each(function(d) { scaleText(this, d); } )
+    .filter(function(d) { return d.parent === parent || (d === parent && !d.children); })
+    .each(function(d) { scaleText(this, d); })
     .transition()
     .duration(500)
     .style("fill-opacity", 1);
