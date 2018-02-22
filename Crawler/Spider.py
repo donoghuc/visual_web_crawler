@@ -225,6 +225,7 @@ class Spider:
 
 def main():
     if len(sys.argv) == 4:
+        print(sys.argv[1], sys.argv[2], sys.argv[3])
         Spider(sys.argv[1], sys.argv[2], sys.argv[3])
     else:
         Spider(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
