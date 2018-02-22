@@ -83,7 +83,7 @@ function zoom(d) {
   transition.selectAll("circle")
     .filter(function(d) { return (d.parent === focus || this.style.pointerEvents === "auto" ) && this.classList.contains("node--leaf"); })
     .style("pointer-events", function(d) {
-      if (d.parent === focus || (!d.children))
+      if (d.parent === focus || d.parent === focus.parent)
         return "auto";
       return "none";
     });
