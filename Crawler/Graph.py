@@ -1,4 +1,5 @@
 import pprint
+from helpers import get_domain
 
 class Graph:
     def __init__(self, nodes=[], edges=[]):
@@ -14,11 +15,11 @@ class Graph:
         self.edges.append(edge)
 
 class Page_Node:
-    __slots__ =('url', 'parents_list', 'title', 'parent_node', 'id', 'node_depth', 'keyword', 'found')
-    def __init__(self, url, parents_list, title, node_depth, id = None, parent_node = None, keyword = None):
+    __slots__ =('url', 'parents_list', 'domain', 'parent_node', 'id', 'node_depth', 'keyword', 'found')
+    def __init__(self, url, parents_list, node_depth, id = None, parent_node = None, keyword = None):
         self.url = url
         self.parents_list = parents_list
-        self.title = title
+        self.domain = get_domain(self.url)
         self.node_depth = int(node_depth)
         self.id = id
         self.parent_node = parent_node
@@ -30,7 +31,7 @@ class Page_Node:
        pprint.pprint(dict({'id': self.id,
                             'parent': self.parent_node,
                             'node depth': self.node_depth,
-                            'title': self.title,
+                            'domain': self.domain,
                             'url': self.url,
                             'keyword found': self.found}))
 

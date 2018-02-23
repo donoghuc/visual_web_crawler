@@ -58,5 +58,8 @@ def to_text(content):
     text = re.sub(r'/\s+/g', ' ', text).strip()
     return text
 
+def get_domain(url):
+    return urlparse(url).netloc 
+
 
 

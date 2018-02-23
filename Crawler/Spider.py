@@ -1,4 +1,4 @@
-#from bs4 import BeautifulSoup
+
 from Graph import Graph, Page_Node
 from helpers import validate_url, is_valid, remove_duplicates, to_text
 import requests
@@ -8,13 +8,10 @@ import lxml.html
 import re
 
 # can set the max urls based on the depth chosen on website?
-# just using 10 to test right now
-MAX_URLS = 20
-
+MAX_URLS = 40
 
 class Spider:
     def __init__(self, seed_url, search_type, limit, keyword=None):
-        #self.driver = webdriver.Firefox()
         self.seed_url = seed_url
         self.search_type = search_type # 'BFS' or 'DFS'
         self.keyword = keyword
@@ -26,25 +23,10 @@ class Spider:
         self.graph = Graph()
         self.id = 0
         self.stop_crawl = bool()
-        self.start_page = self.get_page_title(seed_url)
-        root_node = Page_Node(seed_url, None, self.start_page, 0, None, 0, False)
+        #self.start_page = self.get_page_title(seed_url)
+        root_node = Page_Node(seed_url, None, 0, None, 0, False)
         self.start(root_node)
     
-    
-    # generate soup
-    '''
-    def get_soup(self, url):
-        response = requests.get(url)
-        # lxml faster than html_parser..?
-        data = response.text
-        soup = BeautifulSoup(data, "lxml")
-        return soup
-        
-        #if using selenium:
-        self.driver.get(url)
-        soup = BeautifulSoup(self.driver.page_source, "lxml")
-        return soup
-        '''
     # parse to get links
     def get_links(self, url, content):
         links_set = set()
@@ -62,19 +44,20 @@ class Spider:
                 links_set.add(link)
 
         return links_set
-
+    
+    '''
     # get the page title
     def get_page_title(self, url):
-        try:
-            res = requests.get(url, timeout=10)
-            tree = lxml.html.fromstring(res.content)
-            title = tree.findtext('.//title')
-            if title is not None:
-                return title
-        except:
-            print("failed to find title")
+    try:
+    res = requests.get(url, timeout=10)
+    tree = lxml.html.fromstring(res.content)
+    title = tree.findtext('.//title')
+    if title is not None:
+    return title
+    except:
+    print("failed to find title")
+    '''
 
-            
     def havent_visited(self, url):
         if url not in self.visited_set and url not in self.to_visit:
             return True
@@ -97,7 +80,7 @@ class Spider:
         if self.search_type == 'BFS':
             self.bfs_crawl(node)
         else:
-            self.dfs_crawl(node)
+            self.dfs_crawl(node,0)
 
     #BFS
     def bfs_crawl(self, node):
@@ -143,7 +126,10 @@ class Spider:
             self.get_next()
     
     #DFS
-    def dfs_crawl(self, node):
+    def dfs_crawl(self, node, depth=0):
+        if depth > self.limit:
+            self.end_crawl()
+        
         crawled = node.url in self.visited_set
         if not crawled:
             self.graph.add_node(node, self.id)
@@ -157,14 +143,19 @@ class Spider:
                 self.graph.add_edge(source_node.id, node.id)
             node.parent_node = source_node.id
         if not crawled:
-            res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'}, timeout=10)
-            if self.keyword and self.find_keyword(res.content, self.keyword):
-                node.found = True
-                self.stop_crawl = True
-                self.end_crawl()
+            try:
+                res = requests.get(node.url, headers = {'User-Agent': 'Mozilla/5.0'}, timeout=10)
+                if self.keyword and self.find_keyword(res.content, self.keyword):
+                    node.found = True
+                    self.stop_crawl = True
+                    self.end_crawl()
+            except:
+                print('failed request')
+                self.get_next()
             links = self.get_links(node.url, res.content)
             links = validate_url(links, self.count, MAX_URLS)
             links = remove_duplicates(links)
+
             if len(links) > 0:
                 if self.depth < self.limit:
                     self.depth += 1
@@ -179,14 +170,15 @@ class Spider:
                 self.get_next()
         else:
             self.get_next()
+            
 
     '''Urls are added to the right of the deque (append)
     Difference between the two algos BFS and DFS: how urls are popped off'''
     def crawl(self, current_url, links):
         for link in links:
             if link not in self.visited_set:
-                title = self.get_page_title(link)
-                current_node = Page_Node(link, [current_url], title, self.depth, self.keyword)
+                #title = self.get_page_title(link)
+                current_node = Page_Node(link, [current_url], self.depth, self.keyword)
                 # add url to end of list source nodes list
                 current_node.parents_list.append(current_url)
                 # add to the end of the to_visit list
@@ -228,7 +220,6 @@ class Spider:
 
 def main():
     if len(sys.argv) == 4:
-#
         Spider(sys.argv[1], sys.argv[2], sys.argv[3])
     else:
         Spider(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
