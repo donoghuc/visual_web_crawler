@@ -37,22 +37,22 @@
             <span class="section-heading-lower">New Search</span>
           </h2>
 
-	      <form class="standard-form" action="" method="POST">
+	      <form class="standard-form" action="/search/results" method="POST">
           <input name="url" required type="text" placeholder="URL" class="form-control">
           <input name="depth" required type="number" placeholder="Depth Level (From 1 to 20)" class="form-control" min="1" max="20">
 	        <input name="keyword" type="text" placeholder="Keyword to terminate search (optional)" class="form-control">
 
           <div class="btn-group" data-toggle="buttons">
             <label class="btn btn-primary active">
-              <input name="search_type" type="radio" value="bfs" autocomplete="off" checked> Breadth-first search
+              <input name="search_type" type="radio" value="BFS" autocomplete="off" checked> Breadth-first search
             </label>
             <label class="btn btn-primary">
-              <input name="search_type" type="radio" value="dfs" autocomplete="off"> Depth-first search
+              <input name="search_type" type="radio" value="DFS" autocomplete="off"> Depth-first search
             </label>
           </div>
           <br />
-          <a class="btn btn-primary btn-xl" href="/graph">Crawl!</a>
-	        <!-- <button type="submit" class="btn btn-primary btn-xl">Search</button> -->
+          <!-- <a class="btn btn-primary btn-xl" href="/graph">Crawl!</a> -->
+	        <button type="submit" class="btn btn-primary btn-xl">Search</button>
 	      </form>
 
         </div>
