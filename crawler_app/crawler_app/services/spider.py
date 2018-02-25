@@ -4,7 +4,7 @@ from crawler_app.services.page import Page
 import sys
 
 # can set the max urls based on the depth chosen on website?
-MAX_URLS = 30
+MAX_URLS = 100
         
 class Spider:
     def __init__(self, seed_url, search_type, depth_limit, keyword=None):
@@ -17,7 +17,7 @@ class Spider:
         self.depth = 0 # current node depth
         self.to_visit = Page.to_visit # list of urls to crawl
         self.visited_set = Page.visited_set   # set of urls already crawled
-        self.graph = Graph() # page nodes graph
+        self.graph = Graph(list(),list()) # page nodes graph
         self.id = 0
         self.stop_crawl = bool() # track if stop keyword is found
         root_node = Page_Node(seed_url, None, 0, None, 0, False)
@@ -25,8 +25,8 @@ class Spider:
     
     #  start the crawling
     def start(self, search_type, node):
-        print('here')
         # initialize data structures
+        print('start')
         self.to_visit.clear()
         self.visited_set.clear()
         
@@ -109,21 +109,21 @@ class Spider:
                 next_node = self.to_visit.pop()
         return next_node
 
-    #used for testing
-    def print_data(self):
-        # print nodes dict
-        print("\n--------Page Nodes--------" )
-        for node in self.graph.nodes:
-            node.printdict()
-        # print the graph edges
-        if self.graph.edges:
-            print("\n-----Graph Edges-----")
-            print("Parent ID ---> Target ID")
-            edge_count = 0
-            for edge in self.graph.edges:
-                print(str(edge.parent) +" ----> " +  str(edge.target))
-                edge_count += 1
-            print("Number of edges: ", edge_count)
+    # #used for testing
+    # def print_data(self):
+    #     # print nodes dict
+    #     print("\n--------Page Nodes--------" )
+    #     for node in self.graph.nodes:
+    #         node.printdict()
+    #     # print the graph edges
+    #     if self.graph.edges:
+    #         print("\n-----Graph Edges-----")
+    #         print("Parent ID ---> Target ID")
+    #         edge_count = 0
+    #         for edge in self.graph.edges:
+    #             print(str(edge.parent) +" ----> " +  str(edge.target))
+    #             edge_count += 1
+    #         print("Number of edges: ", edge_count)
 
     def end_crawl(self):
         # self.print_data()
@@ -133,8 +133,9 @@ class Spider:
         #     exit(0)
         pass
 
-    def __del__(self):
-        print('deleting')
+    # def __del__(self):
+    #     print('deleting')
+    #     self.graph = None
 
 def main():
     if len(sys.argv) == 4:
