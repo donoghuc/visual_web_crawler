@@ -22,3 +22,7 @@
 .node--leaf {
   pointer-events: none;
 }
+
+.breakWord {
+  word-wrap: break-word;
+}
