@@ -3,6 +3,7 @@ from crawler_app.controllers.base_controller import BaseController
 # from crawler_app.services.account_service import AccountService
 from crawler_app.viewmodels.crawl_new_vm import NewCrawl
 from crawler_app.services.spider import Spider
+from crawler_app.services.history_service import HistoryService
 # from crawler_app.viewmodels.signin_viewmodel import SigninViewModel
 # import crawler_app.infrastructure.cookie_auth as cookie_auth
 import pandas as pd
@@ -37,6 +38,9 @@ class SearchController(BaseController):
             
         df = pd.DataFrame(build_frame)
 
+        new_entry = HistoryService.add_history(self.logged_in_user_id, vm.url, vm.search_type)
+
+        print("new entry", new_entry)
         def build_json_graph(df):
             '''build dictionary  to turn into JSON for D3 viz'''
             def make_graph(node_id, graph):
