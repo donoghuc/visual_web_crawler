@@ -8,6 +8,7 @@ from crawler_app.services.history_service import HistoryService
 # import crawler_app.infrastructure.cookie_auth as cookie_auth
 import pandas as pd
 import json
+import os
 
 class SearchController(BaseController):
 
@@ -28,6 +29,8 @@ class SearchController(BaseController):
         vm.from_dict(self.data_dict)
 
         crawl_obj = Spider(vm.url, vm.search_type,vm.depth)
+        new_entry = HistoryService.add_history(self.logged_in_user_id, vm.url, vm.search_type)
+
         build_frame = dict(node_id=[],node_depth=[],parent_node=[],domain=[],url=[])
         for i in crawl_obj.graph.nodes:
             build_frame['node_id'].append(i.id)
@@ -37,10 +40,10 @@ class SearchController(BaseController):
             build_frame['url'].append(i.url)
             
         df = pd.DataFrame(build_frame)
+        df['lookup_id'] = new_entry
 
-        new_entry = HistoryService.add_history(self.logged_in_user_id, vm.url, vm.search_type)
-
-        print("new entry", new_entry)
+        print(HistoryService.add_data(df))
+        
         def build_json_graph(df):
             '''build dictionary  to turn into JSON for D3 viz'''
             def make_graph(node_id, graph):
