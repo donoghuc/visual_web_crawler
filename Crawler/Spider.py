@@ -9,9 +9,12 @@ MAX_URLS = 100
 class Spider:
     def __init__(self, seed_url, search_type, depth_limit, keyword=None):
         Page.__init__(self, seed_url)
-        self.seed_url = seed_url
+        self.seed_url = complete_url(seed_url)
         self.search_type = search_type # 'BFS' or 'DFS'
-        self.keyword = keyword
+        if keyword is not None:
+            # change keyword to lowercase
+            self.keyword = str(keyword).lower()
+        else: self.keyword = keyword
         self.count = 0 # track number of links crawled
         self.depth_limit = int(depth_limit) # max depth to crawl
         self.depth = 0 # current node depth

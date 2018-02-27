@@ -5,7 +5,8 @@ from helpers import *
 
 class Page(object):
     def __init__(self, url):
-        self.url = url
+        #add http if only www
+        self.url = complete(url)
         Page.to_visit = deque() # list of urls to crawl
         Page.visited_set = set()   # set of urls already crawled
 
