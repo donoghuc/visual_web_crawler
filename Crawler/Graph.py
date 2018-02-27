@@ -37,9 +37,9 @@ class Page_Node:
 
         
 class Edge:
-    __slots__ = ['parent', 'target']
-    def __init__(self, parent, target):
+    __slots__ = ['parent', 'child']
+    def __init__(self, parent, child):
         self.parent = parent
-        self.target = target
+        self.child = child
         
       

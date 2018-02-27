@@ -4,7 +4,7 @@ from Page import Page
 import sys
 
 # can set the max urls based on the depth chosen on website?
-MAX_URLS = 30
+MAX_URLS = 100
         
 class Spider:
     def __init__(self, seed_url, search_type, depth_limit, keyword=None):
@@ -22,6 +22,7 @@ class Spider:
         self.stop_crawl = bool() # track if stop keyword is found
         root_node = Page_Node(seed_url, None, 0, None, 0, False)
         self.start(self.search_type, root_node)
+
     
     #  start the crawling
     def start(self, search_type, node):
@@ -78,7 +79,9 @@ class Spider:
             if self.keyword and pg.find_keyword(self.keyword):
                 node.found = True
                 self.stop_crawl = True
-                self.end_crawl()
+            #self.end_crawl()
+            if self.stop_crawl:
+                break;
             
             # get next node to crawl
             if self.count < MAX_URLS:
@@ -118,17 +121,17 @@ class Spider:
         # print the graph edges
         if self.graph.edges:
             print("\n-----Graph Edges-----")
-            print("Parent ID ---> Target ID")
+            print("Parent ID ---> Child ID")
             edge_count = 0
             for edge in self.graph.edges:
-                print(str(edge.parent) +" ----> " +  str(edge.target))
+                print(str(edge.parent) +" ----> " +  str(edge.child))
                 edge_count += 1
             print("Number of edges: ", edge_count)
 
     def end_crawl(self):
         self.print_data()
-        
         # exit if keyword is found
+        print('keyword found: ', self.keyword)
         if self.stop_crawl:
             exit(0)
 
