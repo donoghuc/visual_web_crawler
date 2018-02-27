@@ -11,10 +11,9 @@ class Spider:
         Page.__init__(self, seed_url)
         self.seed_url = seed_url
         self.search_type = search_type # 'BFS' or 'DFS'
-
         if keyword is not None:
+            # change keyword to lowercase
             self.keyword = str(keyword).lower()
-            
         self.count = 0 # track number of links crawled
         self.depth_limit = int(depth_limit) # max depth to crawl
         self.depth = 0 # current node depth
