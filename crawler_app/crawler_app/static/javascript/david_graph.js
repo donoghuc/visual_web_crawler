@@ -50,7 +50,18 @@ var focus = root,
 var circle = g.selectAll("circle")
   .data(nodes)
   .enter().append("circle")
-    .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+    .attr("class", function(d) {
+      var nodeClasses = "node";
+
+      if (!(d.parent))
+        nodeClasses += " node--root";
+      else if (!(d.children)) {
+        nodeClasses += " node--leaf";
+        if ("found" in d.data && d.data.found === "true")
+          nodeClasses += " nodeFound";
+      }
+      return nodeClasses;
+    })
     .style("fill", function(d) { return d.children ? color(d.depth) : null; })
     .on("mouseover", function(d) { d3.select("#child_url").text(d["data"]["url"]); })
     .on("mouseout", function(d) { d3.select("#child_url").text(""); })
