@@ -19,6 +19,7 @@ class SearchController(BaseController):
         if not self.logged_in_user_id:
             print("Cannot view account page, must login")
             self.redirect('/home/signin')
+
         state = NewCrawl()
         state.previous_searches = HistoryService.get_history(self.logged_in_user_id)
 
@@ -42,17 +43,19 @@ class SearchController(BaseController):
 
         if not (vm.archived or vm.new_from_archived):
             graph = kick_off_crawl(self.logged_in_user_id, vm.url, vm.search_type, vm.depth, vm.keyword)
+
             return {'crawl_result': graph}
 
         if vm.new_from_archived:
             history = HistoryService.get_params_by_history_id(vm.new_from_archived)
             graph = kick_off_crawl(self.logged_in_user_id, history.get('url'), history.get('search_type'),
                                      history.get('search_limit'), history.get('keyword'))
+
             return {'crawl_result': graph}
 
 
         if vm.archived:
-            pass
+            return {'crawl_result': HistoryService.get_archived_graph_data(vm.archived)}
 
 
 
