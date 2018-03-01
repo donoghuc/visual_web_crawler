@@ -20,6 +20,24 @@ class HistoryService:
 
         return history.auto_id
 
+    @staticmethod
+    def get_history(user_id):
+        query = "SELECT auto_id, url, search_type, created FROM History WHERE user_id=?"
+        conn = lite.connect(DbSessionFactory.get_db_file_path())
+        df = pd.read_sql_query(query,conn,params=(user_id,))
+        conn.close()
+        if len(df) > 0:
+            history_dict_list = list()
+            for i,r in df.iterrows():
+                history_dict_list.append(dict(auto_id=r['auto_id'],
+                                              url=r['url'],
+                                              search_type=r['search_type'],
+                                              created=r['created']))
+            return history_dict_list
+
+        else:
+            return None
+
 
     @staticmethod
     def add_data(dataframe):

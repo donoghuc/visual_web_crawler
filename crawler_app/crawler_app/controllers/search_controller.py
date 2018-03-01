@@ -18,8 +18,10 @@ class SearchController(BaseController):
         if not self.logged_in_user_id:
             print("Cannot view account page, must login")
             self.redirect('/home/signin')
+        state = NewCrawl()
+        state.previous_searches = HistoryService.get_history(self.logged_in_user_id)
 
-        return NewCrawl().to_dict()
+        return state.to_dict()
 
     @pyramid_handlers.action(renderer='templates/visualization/viz.pt',
                              request_method='POST',
@@ -27,6 +29,15 @@ class SearchController(BaseController):
     def new_search_post(self):
         vm = NewCrawl()
         vm.from_dict(self.data_dict)
+        print(vm.url)
+        print(vm.depth)
+        if(vm.keyword):
+            print(vm.keyword)
+        print(vm.search_type) 
+        print(vm.previous_searches) 
+        print(vm.search_id)
+        print(vm.archived)
+        print(vm.new_from_archived)
 
         crawl_obj = Spider(vm.url, vm.search_type,vm.depth)
         new_entry = HistoryService.add_history(self.logged_in_user_id, vm.url, vm.search_type)
