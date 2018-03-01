@@ -19,15 +19,25 @@ var color = d3.scaleLinear()
     .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
     .interpolate(d3.interpolateHcl);
 
+var numLeafNodes = 0;
 var pack = d3.pack()
     .size([diameter - margin, diameter - margin])
-    .padding(2);
+    .padding(function(d) {
+      // add padding to all nodes with exactly one child so you can tell the difference between the levels
+      if ('children' in d && d.children.length == 1)
+        // using numLeafNodes here works since this function isn't called until "nodes = pack(root).descendants()"
+        //     which is after numLeafNodes is finalized in lines below
+        // you get bad looking results without dynamically changing the padding based on the number of leaf nodes
+        return diameter / (numLeafNodes * 2);
+      return 2;
+    });
 
 root = JSON.parse(d3.select("#search_json").text());
 
 root = d3.hierarchy(root)
     .sum(function(d) {
       if (!('children' in d)) {
+        numLeafNodes++;
         return 1;
       }
     })
@@ -40,7 +50,18 @@ var focus = root,
 var circle = g.selectAll("circle")
   .data(nodes)
   .enter().append("circle")
-    .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+    .attr("class", function(d) {
+      var nodeClasses = "node";
+
+      if (!(d.parent))
+        nodeClasses += " node--root";
+      else if (!(d.children)) {
+        nodeClasses += " node--leaf";
+        if ("found" in d.data && d.data.found === "true")
+          nodeClasses += " nodeFound";
+      }
+      return nodeClasses;
+    })
     .style("fill", function(d) { return d.children ? color(d.depth) : null; })
     .on("mouseover", function(d) { d3.select("#child_url").text(d["data"]["url"]); })
     .on("mouseout", function(d) { d3.select("#child_url").text(""); })

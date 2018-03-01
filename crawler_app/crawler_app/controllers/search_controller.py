@@ -30,7 +30,6 @@ class SearchController(BaseController):
 
         crawl_obj = Spider(vm.url, vm.search_type,vm.depth)
         new_entry = HistoryService.add_history(self.logged_in_user_id, vm.url, vm.search_type)
-
         build_frame = dict(node_id=[],node_depth=[],parent_node=[],domain=[],url=[])
         for i in crawl_obj.graph.nodes:
             build_frame['node_id'].append(i.id)
@@ -65,8 +64,8 @@ class SearchController(BaseController):
             make_graph(0,graph)
             start_node_children = [node for node in graph['children']]
             finalized_graph = dict(url=df.loc[df['node_id'] == 0, 'url'].values[0],
-                                  domain=df.loc[df['node_id'] == 0, 'domain'].values[0],
-                                  children=[node for node in graph['children']])
+                                    domain=df.loc[df['node_id'] == 0, 'domain'].values[0],
+                                    children=[node for node in graph['children']])
             return finalized_graph
             
         test = build_json_graph(df)

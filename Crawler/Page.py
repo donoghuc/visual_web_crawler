@@ -5,7 +5,8 @@ from helpers import *
 
 class Page(object):
     def __init__(self, url):
-        self.url = url
+        #add http if only www
+        self.url = complete(url)
         Page.to_visit = deque() # list of urls to crawl
         Page.visited_set = set()   # set of urls already crawled
 
@@ -40,6 +41,6 @@ class Page(object):
         return False
         
     def havent_visited(self, url):
-        if url not in self.visited_set and url not in self.to_visit:
+        if url not in Page.visited_set and url not in Page.to_visit:
             return True
         else: return False

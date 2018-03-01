@@ -14,7 +14,7 @@
               </a>
             </li>
             <li  class="nav-item active px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="/search">Crawl!    
+              <a class="nav-link text-uppercase text-expanded" href="/search">Crawl!
                 <span class="sr-only">(current)</span>
               </a>
             </li>
@@ -25,7 +25,7 @@
         </div>
       </div>
     </nav>
-  </div>  
+  </div>
 
   <div metal:fill-slot="main_content">
     <section class="page-section clearfix">
@@ -51,8 +51,8 @@
             </label>
           </div>
           <br />
-          <!-- <a class="btn btn-primary btn-xl" href="/graph">Crawl!</a> -->
-	        <button type="submit" class="btn btn-primary btn-xl">Search</button>
+          <!-- <a class="btn btn-primary btn-xl btn-submit" href="/graph">Crawl!</a> -->
+	        <button type="submit" class="btn btn-primary btn-xl btn-submit">Search</button>
 	      </form>
 
         </div>
@@ -81,5 +81,9 @@
         </div>
       </div>
     </section>
+  </div>
+
+  <div metal:fill-slot="additional_js">
+    <script src="/static/javascript/search_page.js"></script>
   </div>
 </div>

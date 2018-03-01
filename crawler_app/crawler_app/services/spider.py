@@ -4,14 +4,17 @@ from crawler_app.services.page import Page
 import sys
 
 # can set the max urls based on the depth chosen on website?
-MAX_URLS = 100
+MAX_URLS = 40
         
 class Spider:
     def __init__(self, seed_url, search_type, depth_limit, keyword=None):
         Page.__init__(self, seed_url)
-        self.seed_url = seed_url
+        self.seed_url = complete_url(seed_url)
         self.search_type = search_type # 'BFS' or 'DFS'
-        self.keyword = keyword
+        if keyword is not None:
+            # change keyword to lowercase
+            self.keyword = str(keyword).lower()
+        else: self.keyword = keyword 
         self.count = 0 # track number of links crawled
         self.depth_limit = int(depth_limit) # max depth to crawl
         self.depth = 0 # current node depth
@@ -76,9 +79,10 @@ class Spider:
         
         # check if stop keyword is found
             if self.keyword and pg.find_keyword(self.keyword):
+                print('keyword found!')
                 node.found = True
                 self.stop_crawl = True
-                self.end_crawl()
+                break;
             
             # get next node to crawl
             if self.count < MAX_URLS:
