@@ -1,15 +1,8 @@
 import pyramid_handlers
 from crawler_app.controllers.base_controller import BaseController
-# from crawler_app.services.account_service import AccountService
 from crawler_app.viewmodels.crawl_new_vm import NewCrawl
-# from crawler_app.services.spider import Spider
 from crawler_app.services.history_service import HistoryService
-# # from crawler_app.viewmodels.signin_viewmodel import SigninViewModel
-# # import crawler_app.infrastructure.cookie_auth as cookie_auth
-# import pandas as pd
-# import json
-# import os
-from crawler_app.services.crawl_service import kick_off_crawl
+from crawler_app.services.crawl_service import CrawlService
 
 class SearchController(BaseController):
 
@@ -42,20 +35,22 @@ class SearchController(BaseController):
         print(vm.new_from_archived)
 
         if not (vm.archived or vm.new_from_archived):
-            graph = kick_off_crawl(self.logged_in_user_id, vm.url, vm.search_type, vm.depth, vm.keyword)
-
+            graph = CrawlService.kick_off_crawl(self.logged_in_user_id, vm.url, vm.search_type, vm.depth, vm.keyword)
+            # print(graph)
             return {'crawl_result': graph}
 
         if vm.new_from_archived:
             history = HistoryService.get_params_by_history_id(vm.new_from_archived)
-            graph = kick_off_crawl(self.logged_in_user_id, history.get('url'), history.get('search_type'),
+            graph = CrawlService.kick_off_crawl(self.logged_in_user_id, history.get('url'), history.get('search_type'),
                                      history.get('search_limit'), history.get('keyword'))
 
             return {'crawl_result': graph}
 
 
         if vm.archived:
-            return {'crawl_result': HistoryService.get_archived_graph_data(vm.archived)}
+            graph = HistoryService.get_archived_graph_data(vm.archived)
+            # print(graph)
+            return {'crawl_result': graph}
 
 
 

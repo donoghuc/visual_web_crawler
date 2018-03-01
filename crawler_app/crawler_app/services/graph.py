@@ -25,15 +25,6 @@ class Page_Node:
         self.parent_node = parent_node
         self.keyword = keyword
         self.found = bool()
-        
-        
-    # def printdict(self):
-    #    pprint.pprint(dict({'id': self.id,
-    #                         'parent': self.parent_node,
-    #                         'node depth': self.node_depth,
-    #                         'domain': self.domain,
-    #                         'url': self.url,
-    #                         'keyword found': self.found}))
 
         
 class Edge:

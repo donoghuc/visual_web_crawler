@@ -1,7 +1,7 @@
 # from passlib.handlers.sha2_crypt import sha512_crypt
 from crawler_app.data.history import History
 from crawler_app.data.dbsession import DbSessionFactory
-from crawler_app.services.crawl_service import build_json_graph
+from crawler_app.services.helpers import build_json_graph
 import pandas as pd
 import sqlite3 as lite
 
@@ -63,7 +63,9 @@ class HistoryService:
         conn = lite.connect(DbSessionFactory.get_db_file_path())
         df = pd.read_sql_query(query,conn,params=(lookup_id,))
         conn.close()
-        return build_json_graph(df)
+        graph = build_json_graph(df)
+
+        return graph
 
 
     @staticmethod
