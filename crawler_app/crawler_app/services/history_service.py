@@ -7,13 +7,14 @@ import sqlite3 as lite
 
 class HistoryService:
     @staticmethod
-    def add_history(user_id, url, search_type):
+    def add_history(user_id, url, search_type, keyword):
         session = DbSessionFactory.create_session()
 
         history = History()
         history.user_id = user_id
         history.url = url
         history.search_type = search_type
+        history.keyword = keyword
 
         session.add(history)
         session.commit()
@@ -22,7 +23,7 @@ class HistoryService:
 
     @staticmethod
     def get_history(user_id):
-        query = "SELECT auto_id, url, search_type, created FROM History WHERE user_id=?"
+        query = "SELECT auto_id, url, search_type, keyword, created FROM History WHERE user_id=?"
         conn = lite.connect(DbSessionFactory.get_db_file_path())
         df = pd.read_sql_query(query,conn,params=(user_id,))
         conn.close()
@@ -32,6 +33,7 @@ class HistoryService:
                 history_dict_list.append(dict(auto_id=r['auto_id'],
                                               url=r['url'],
                                               search_type=r['search_type'],
+                                              keyword=r['keyword'],
                                               created=r['created']))
             return history_dict_list
 

@@ -72,8 +72,10 @@
               <tr>
                 <td>URL</td>
                 <td>Type</td> 
+                <td>Keyword</td>
                 <td>Time</td> 
                 <td>Archived<td>
+                <td>New<td>
               </tr>
             </thead>
             <tbody>
@@ -81,10 +83,18 @@
                 <td>${search.url}</td>
                 <td>${search.search_type}</td>
                 <td>${search.created}</td>
+                <td>${search.keyword}</td>
                 <td>
-                  <form class="standard-form" action="" method="POST">
+                  <form form class="standard-form" action="/search/results" method="POST">
                     <div class="form-group">
                       <button name=archived type="submit" class="btn btn-sectondary btn-sm btn-submit" tal:attributes="value search.auto_id">Archived</button>
+                    </div>
+                  </form>
+                </td>
+                <td>
+                  <form form class="standard-form" action="/search/results" method="POST">
+                    <div class="form-group">
+                      <button name=new_from_archived type="submit" class="btn btn-sectondary btn-sm btn-submit" tal:attributes="value search.auto_id">New</button>
                     </div>
                   </form>
                 </td>

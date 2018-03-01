@@ -36,11 +36,11 @@ class SearchController(BaseController):
         print(vm.search_type) 
         print(vm.previous_searches) 
         print(vm.search_id)
-        print(vm.archived)
+        print("here",vm.archived)
         print(vm.new_from_archived)
 
         crawl_obj = Spider(vm.url, vm.search_type,vm.depth)
-        new_entry = HistoryService.add_history(self.logged_in_user_id, vm.url, vm.search_type)
+        new_entry = HistoryService.add_history(self.logged_in_user_id, vm.url, vm.search_type, vm.keyword)
         build_frame = dict(node_id=[],node_depth=[],parent_node=[],domain=[],url=[])
         for i in crawl_obj.graph.nodes:
             build_frame['node_id'].append(i.id)
