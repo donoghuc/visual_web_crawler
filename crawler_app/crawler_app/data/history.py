@@ -10,5 +10,6 @@ class History(SqlAlchemyBase):
     user_id = Column(String, index=True, nullable=False)
     url = Column(String, nullable=False)
     search_type = Column(String, nullable=False)
+    search_limit = Column(Integer, nullable=False)
     keyword = Column(String)
     created = Column(DateTime, default=datetime.datetime.now)

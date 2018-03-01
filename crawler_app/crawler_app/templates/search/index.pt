@@ -72,6 +72,7 @@
               <tr>
                 <td>URL</td>
                 <td>Type</td> 
+                <td>Depth Limit</td>
                 <td>Keyword</td>
                 <td>Time</td> 
                 <td>Archived<td>
@@ -82,6 +83,7 @@
               <tr tal:repeat="search previous_searches">
                 <td>${search.url}</td>
                 <td>${search.search_type}</td>
+                <td>${search.search_limit}</td>
                 <td>${search.created}</td>
                 <td>${search.keyword}</td>
                 <td>
