@@ -284,3 +284,16 @@ p {
 .standard-form input, .standard-form button {
     margin: 10px;
 }
+
+
+.table_style table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table_style th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+.table_style tr:nth-child(even) {background-color: #f2f2f2;}

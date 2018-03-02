@@ -34,6 +34,8 @@ class SearchController(BaseController):
         # print("here",vm.archived)
         # print(vm.new_from_archived)
 
+        # INSERT VALIDATION HERE
+
         if not (vm.archived or vm.new_from_archived):
             graph = CrawlService.kick_off_crawl(self.logged_in_user_id, vm.url, vm.search_type, vm.depth, vm.keyword)
             return {'crawl_result': graph}
