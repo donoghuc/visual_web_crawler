@@ -4,6 +4,7 @@ from crawler_app.data.dbsession import DbSessionFactory
 from crawler_app.services.helpers import build_json_graph
 import pandas as pd
 import sqlite3 as lite
+import json
 
 
 class HistoryService:
@@ -64,8 +65,7 @@ class HistoryService:
         df = pd.read_sql_query(query,conn,params=(lookup_id,))
         conn.close()
         graph = build_json_graph(df)
-
-        return graph
+        return json.dumps(graph)
 
 
     @staticmethod

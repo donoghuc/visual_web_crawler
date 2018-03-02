@@ -24,19 +24,18 @@ class SearchController(BaseController):
     def new_search_post(self):
         vm = NewCrawl()
         vm.from_dict(self.data_dict)
-        print(vm.url)
-        print(vm.depth)
-        if(vm.keyword):
-            print(vm.keyword)
-        print(vm.search_type) 
-        print(vm.previous_searches) 
-        print(vm.search_id)
-        print("here",vm.archived)
-        print(vm.new_from_archived)
+        # print(vm.url)
+        # print(vm.depth)
+        # if(vm.keyword):
+        #     print(vm.keyword)
+        # print(vm.search_type) 
+        # print(vm.previous_searches) 
+        # print(vm.search_id)
+        # print("here",vm.archived)
+        # print(vm.new_from_archived)
 
         if not (vm.archived or vm.new_from_archived):
             graph = CrawlService.kick_off_crawl(self.logged_in_user_id, vm.url, vm.search_type, vm.depth, vm.keyword)
-            # print(graph)
             return {'crawl_result': graph}
 
         if vm.new_from_archived:
@@ -49,7 +48,6 @@ class SearchController(BaseController):
 
         if vm.archived:
             graph = HistoryService.get_archived_graph_data(vm.archived)
-            # print(graph)
             return {'crawl_result': graph}
 
 
