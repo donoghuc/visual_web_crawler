@@ -1,6 +1,8 @@
 
 $(".btn-submit").click(function(event) {
-  $("input, select, .btn").css("pointer-events", "none");
-  $("html").css("cursor", "wait");
+  if (this.parentElement.checkValidity()) {
+    $("input, select, .btn").css("pointer-events", "none");
+    $("html").css("cursor", "wait");
+  }
   return true;
 });
