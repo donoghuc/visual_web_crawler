@@ -1,5 +1,6 @@
 import urllib.parse
 from urllib.parse import urlparse
+from urllib.request import urlopen
 from lxml import html
 from lxml.html.clean import Cleaner
 import re
@@ -17,13 +18,21 @@ def validate_url(links, count, total):
 
 def is_valid(url):
     parsed = urlparse(url)
-    if parsed.scheme and parsed.netloc:
+    if parsed.scheme and parsed.netloc and parsed.path:
         url = defrag_url(url)
         url = delete_slash(url)
         url = complete_url(url)
         if is_allowed(url):
             return True
     return False
+
+def validate_seed(url):
+    try:
+        ret = urllib.request.urlopen(url)
+        if ret.code == 200:
+            return True
+    except:
+        return False 
 
 def is_allowed(url):
     excluded_list = ['mailto:', 'tell:', '.css', '.js', 'favicon', '.jpg', '.jpeg', '.gif', '.pdf', '.doc']
