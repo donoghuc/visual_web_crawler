@@ -36,21 +36,23 @@ class SearchController(BaseController):
         # print(vm.new_from_archived)
 
         # INSERT VALIDATION HERE
-        if validate_seed(vm.url):
+        
 
-            if not (vm.archived or vm.new_from_archived):
+        if not (vm.archived or vm.new_from_archived):
+            if validate_seed(vm.url):
                 graph = CrawlService.kick_off_crawl(self.logged_in_user_id, vm.url, vm.search_type, vm.depth, vm.keyword)
                 return {'crawl_result': graph}
+            else:
+                self.redirect('/search')
 
-            if vm.new_from_archived:
-                history = HistoryService.get_params_by_history_id(vm.new_from_archived)
-                graph = CrawlService.kick_off_crawl(self.logged_in_user_id, history.get('url'), history.get('search_type'),
+        if vm.new_from_archived:
+            history = HistoryService.get_params_by_history_id(vm.new_from_archived)
+            graph = CrawlService.kick_off_crawl(self.logged_in_user_id, history.get('url'), history.get('search_type'),
                                          history.get('search_limit'), history.get('keyword'))
 
-                return {'crawl_result': graph}
+            return {'crawl_result': graph}
 
-            if vm.archived:
-                graph = HistoryService.get_archived_graph_data(vm.archived)
-                return {'crawl_result': graph}
-        else:
-            self.redirect('/search')
+        if vm.archived:
+            graph = HistoryService.get_archived_graph_data(vm.archived)
+            return {'crawl_result': graph}
+        

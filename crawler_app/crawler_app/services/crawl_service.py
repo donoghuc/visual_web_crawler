@@ -1,5 +1,4 @@
 from crawler_app.services.spider import Spider
-from crawler_app.services.helpers import is_valid
 # from crawler_app.services.history_service import HistoryService
 # from crawler_app.viewmodels.signin_viewmodel import SigninViewModel
 # import crawler_app.infrastructure.cookie_auth as cookie_auth
