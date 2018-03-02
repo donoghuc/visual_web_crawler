@@ -1,6 +1,6 @@
 import urllib.parse
 from urllib.parse import urlparse
-from urllib.request import urlopen
+import requests
 from lxml import html
 from lxml.html.clean import Cleaner
 import re
@@ -28,11 +28,10 @@ def is_valid(url):
 
 def validate_seed(url):
     try:
-        ret = urllib.request.urlopen(url)
-        if ret.code == 200:
+        res = requests.head(url)
+        if res.status_code < 400:
             return True
-    except:
-        return False 
+    except: return False 
 
 def is_allowed(url):
     excluded_list = ['mailto:', 'tell:', '.css', '.js', 'favicon', '.jpg', '.jpeg', '.gif', '.pdf', '.doc']

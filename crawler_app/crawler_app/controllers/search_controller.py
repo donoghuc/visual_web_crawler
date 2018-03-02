@@ -1,9 +1,11 @@
 import pyramid_handlers
+from pyramid.httpexceptions import HTTPFound
 from crawler_app.controllers.base_controller import BaseController
 from crawler_app.viewmodels.crawl_new_vm import NewCrawl
 from crawler_app.services.history_service import HistoryService
 from crawler_app.services.crawl_service import CrawlService
 from crawler_app.services.helpers import validate_seed
+
 
 class SearchController(BaseController):
 
@@ -36,14 +38,12 @@ class SearchController(BaseController):
         # print(vm.new_from_archived)
 
         # INSERT VALIDATION HERE
-        
-
         if not (vm.archived or vm.new_from_archived):
             if validate_seed(vm.url):
                 graph = CrawlService.kick_off_crawl(self.logged_in_user_id, vm.url, vm.search_type, vm.depth, vm.keyword)
                 return {'crawl_result': graph}
             else:
-                self.redirect('/search')
+                return HTTPFound(location='/search')
 
         if vm.new_from_archived:
             history = HistoryService.get_params_by_history_id(vm.new_from_archived)
