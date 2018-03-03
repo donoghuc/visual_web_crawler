@@ -10,6 +10,7 @@ body {
   background-position: center;
   background-size: cover;
   margin-bottom: 12em;
+  text-align: justify;
 }
 
 h1,
@@ -23,6 +24,25 @@ h6 {
 
 p {
   line-height: 1.75;
+}
+
+figure {
+  display: inline-block;
+  margin: 8px; 
+  padding: 0.5em;
+}
+
+figure img{
+  width:100%;
+  display:block;
+  padding: 0.2em;
+  border: 1px dotted gray;
+  margin-left:auto;  
+  margin-right:auto;
+}
+figcaption {
+  text-align: center; 
+  font-size: 10px
 }
 
 .text-faded {
@@ -56,6 +76,8 @@ p {
 
 .section-heading {
   text-transform: uppercase;
+  letter-spacing: 2px; 
+  text-align: center;
 }
 
 .section-heading .section-heading-upper {
@@ -297,3 +319,12 @@ p {
 }
 
 .table_style tr:nth-child(even) {background-color: #f2f2f2;}
+
+.responsive-img{
+  max-width: 100%;
+  display: block;
+  height: auto;
+
+}
+
+
