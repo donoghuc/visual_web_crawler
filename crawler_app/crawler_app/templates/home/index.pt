@@ -80,32 +80,36 @@
                 <div class="row">
 
                     <div class="col-sm-4 band-members">
-                        <img src="/static/img/cas_1.png" class="img-fluid rounded-circle"/>
-                        <br>
-                        <span>Cas Donoghue</span>
+                      <figure>
+                        <p><img src="/static/img/cas_1.png" class="responsive-img"/>
+                        <figcaption>
+                        <h5 class="mt-3">Cas Donoghue</h5>
+                        <p>I started the OSU post bacc CS degree in winter 2015 while working full time as a researcher at Sarepta Therapeutics. My experience using bioinformatics software and data management platforms for molecular biology research inspired me to leave the biotech lab in 2017 for an opportunity to intern at Oracle in the (Software/Hardware) Test Engineering group. As I wrap up the last semester at OSU (expected graduation march 2018!) I am seeking the opportunity to gain more professional experience with distributed systems, dev-ops and security in the technology industry. Check out my <a href="https://www.cas-donoghue.org/" target="_blank"> personal website</a> for more information.
+                        </p></figcaption></p>
+                      </figure>
                     </div>
                     <div class="col-sm-4 band-members">
-                        <img src="/static/img/david_1.png" class="img-fluid rounded-circle"/>
-                        <br>
-                        <span>David Hartman</span>
+                      <figure>
+                        <img src="/static/img/david_1.png" class="responsive-img"/>
+                        <figcaption>
+                        <h5 class="mt-3">David Hartman</h5>
+                        <p>While working at The Thrasher Group as a Remote Sensing Technician, I began to use my self-taught programming skills to write automation scripts and data processing toolkits to make my department more efficient. Eventually I decided to pursue a formal education in computer science and joined the Oregon State CS program. Now, I'm in my last semester and I can't wait to be a part of all the exciting experiences there are in this industry.
+                        </p>
+                        </figcaption>
+                      </figure>
                     </div>
                     <div class="col-sm-4 band-members">
-                        <img src="/static/img/ngan_1.png" class="img-fluid rounded-circle"/>
-                        <br>
-                        <span>Ngan Tran</span>
+                      <figure>
+                        <img src="/static/img/ngan_1.png" class="responsive-img"/>
+                        <figcaption>
+                        <h5 class="mt-3">Ngan Tran</h5>
+                        <p>I first developed interests in CS and bioinformatics while working in a research lab. With degrees in Biological and Biomedical Sciences as well as an interest in programming, I felt that getting a formal education in CS would be a good next step for me. Now in my last term of the OSU post bacc program, I'm glad I made the decision, and happy to not have to choose between my passions!
+                        </p>
+                        </figcaption>
+                      </figure>
                     </div>
-                </div>
-                <div class="col-sm-12 band-members">
-                <h4 class="mt-3">Cas Donoghue</h4>
-                <p>I started the OSU post bacc CS degree in winter 2015 while working full time as a researcher at Sarepta Therapeutics. My experience using bioinformatics software and data management platforms for molecular biology research inspired me to leave the biotech lab in 2017 for an opportunity to intern at Oracle in the (Software/Hardware) Test Engineering group. As I wrap up the last semester at OSU (expected graduation march 2018!) I am seeking the opportunity to gain more professional experience with distributed systems, dev-ops and security in the technology industry. Check out my <a href="https://www.cas-donoghue.org/" target="_blank"> personal website</a> for more information.
-                </p>
-                <h4>David Hartman</h4>
-                <p>While working at The Thrasher Group as a Remote Sensing Technician, I began to use my self-taught programming skills to write automation scripts and data processing toolkits to make my department more efficient. Eventually I decided to pursue a formal education in computer science and joined the Oregon State CS program. Now, I'm in my last semester and I can't wait to be a part of all the exciting experiences there are in this industry.
-                </p>
-                <h4>Ngan Tran</h4>
-                <p>I first developed interests in CS and bioinformatics while working in a research lab. With degrees in Biological and Biomedical Sciences as well as an interest in programming, I felt that getting a formal education in CS would be a good next step for me. Now in my last term of the OSU post bacc program, I'm glad I made the decision, and happy to not have to choose between my passions!
-                </p>
-                </div>
+                    
+                    
             </div>
           </div>
         </div>
