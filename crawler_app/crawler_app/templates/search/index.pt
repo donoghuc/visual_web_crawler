@@ -67,7 +67,7 @@
             <span class="section-heading-upper">Caelum</span>
             <span class="section-heading-lower">Previous Search</span>
           </h2>
-          <div class="table_style">
+          <div class="table-responsive table_style">
             <table>
               <thead>
                 <tr>
