@@ -23,7 +23,7 @@ import crawler_app.controllers.home_controller as home
 from crawler_app.data.dbsession import DbSessionFactory
 
 import crawler_app.controllers.search_controller as search
-import crawler_app.controllers.viz_controller as viz
+import crawler_app.controllers.demo_controller as demo
 
 # from crawler_app.services.log_service import LogService
 
@@ -76,7 +76,7 @@ def init_routing(config):
     config.add_handler('root', '/', handler=home.HomeController, action='index')
     add_controller_routes(config, home.HomeController, 'home')
     add_controller_routes(config, search.SearchController, 'search')
-    add_controller_routes(config, viz.VizController, 'graph')
+    add_controller_routes(config, demo.DemoController, 'demo')
     config.scan()
 
 
