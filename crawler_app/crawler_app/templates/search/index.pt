@@ -71,22 +71,22 @@
             <table>
               <thead>
                 <tr>
-                  <td>URL</td>
-                  <td>Type</td>
-                  <td>Depth Limit</td>
-                  <td>Keyword</td>
-                  <td>Time</td>
-                  <td>Archived</td>
-                  <td>New</td>
+                  <th>URL</th>
+                  <th>Type</th>
+                  <th>Depth Limit</th>
+                  <th>Keyword</th>
+                  <th>Time</th>
+                  <th>Archived</th>
+                  <th>New</th>
                 </tr>
               </thead>
               <tbody>
                 <tr tal:repeat="search previous_searches">
-                  <td>${search.url}</td>
+                  <td><a href ="${search.url}">${search.url}</a></td>
                   <td>${search.search_type}</td>
                   <td>${search.search_limit}</td>
                   <td>${search.keyword}</td>
-                  <td>${search.created}</td>
+                  <td><time>${search.created}</time></td>
                   <td>
                     <form form class="standard-form" action="/search/results" method="POST">
                       <div class="form-group">
