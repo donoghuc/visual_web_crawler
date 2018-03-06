@@ -14,8 +14,8 @@ class DemoController(BaseController):
     @pyramid_handlers.action(renderer='templates/demo/node.pt',
                              name="node0")
     def node_0(self):
-        return {'value': 'cyan', 'links': [prefix + '/demo/node0/node1',
-                       prefix + '/demo/node0/node2',prefix + '/demo/node0/node3']}
+        return {'value': 'cyan', 'links': [prefix + '/demo/node1',
+                       prefix + '/demo/node2',prefix + '/demo/node3']}
 
 
     @pyramid_handlers.action(renderer='templates/demo/node.pt',
@@ -27,14 +27,14 @@ class DemoController(BaseController):
     @pyramid_handlers.action(renderer='templates/demo/node.pt',
                              name="node2")
     def node_2(self):
-        return {'value': 'red', 'links': [prefix + '/demo/node0/node2/node4',
-                                          prefix + '/demo/node0/node2/node5']}
+        return {'value': 'red', 'links': [prefix + '/demo/node4',
+                                          prefix + '/demo/node5']}
 
 
     @pyramid_handlers.action(renderer='templates/demo/node.pt',
                              name="node3")
     def node_3(self):
-        return {'value': 'yellow', 'links': [prefix + '/demo/node0/node3/node6']}
+        return {'value': 'yellow', 'links': [prefix + '/demo/node6']}
 
 
     @pyramid_handlers.action(renderer='templates/demo/node.pt',
@@ -51,8 +51,8 @@ class DemoController(BaseController):
     @pyramid_handlers.action(renderer='templates/demo/node.pt',
                              name="node6")
     def node_6(self):
-        return {'value': 'grey', 'links': [prefix + '/demo/node0/node3/node6/node7',
-            prefix + '/demo/node0/node3/node6/node8',prefix + '/demo/node0/node3/node6/node9']}
+        return {'value': 'grey', 'links': [prefix + '/demo/node7',
+            prefix + '/demo/node8',prefix + '/demo/node9']}
 
 
     @pyramid_handlers.action(renderer='templates/demo/node.pt',
@@ -64,7 +64,7 @@ class DemoController(BaseController):
     @pyramid_handlers.action(renderer='templates/demo/node.pt',
                              name="node8")
     def node_8(self):
-        return {'value': 'black', 'links': [prefix + '/demo/node0/node3/node6/node8/node10']}
+        return {'value': 'black', 'links': [prefix + '/demo/node10']}
 
 
     @pyramid_handlers.action(renderer='templates/demo/node.pt',
