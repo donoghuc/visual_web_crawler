@@ -76,7 +76,11 @@ def init_routing(config):
     config.add_handler('root', '/', handler=home.HomeController, action='index')
     add_controller_routes(config, home.HomeController, 'home')
     add_controller_routes(config, search.SearchController, 'search')
-    add_controller_routes(config, demo.DemoController, 'demo')
+    # add_controller_routes(config, demo.DemoController, 'demo')
+    config.add_handler('demo','demo',handler=demo.DemoController,action="index")
+    config.add_handler('node0','demo/node0',handler=demo.DemoController,action="node0")
+    config.add_handler('node1','demo/node0/node1',handler=demo.DemoController,action="node1")
+    # config.add_handler('node1','demo/node0/node1',handler=demo.DemoController,action='node1')
     config.scan()
 
 

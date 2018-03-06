@@ -100,6 +100,7 @@ def build_json_graph(df):
                 node['children'] = child_list
             node['url'] = df.loc[df['node_id'] == node_id, 'url'].values[0]
             node['domain'] = df.loc[df['node_id'] == node_id, 'domain'].values[0]
+            node['found'] = str(df.loc[df['node_id'] == node_id, 'found'].values[0]).lower()
             graph.update(node)
         return node
 
@@ -108,5 +109,6 @@ def build_json_graph(df):
     start_node_children = [node for node in graph['children']]
     finalized_graph = dict(url=df.loc[df['node_id'] == 0, 'url'].values[0],
                             domain=df.loc[df['node_id'] == 0, 'domain'].values[0],
+                            found=str(df.loc[df['node_id'] == 0, 'found'].values[0]).lower(),
                             children=[node for node in graph['children']])
     return finalized_graph

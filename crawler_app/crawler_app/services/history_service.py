@@ -60,7 +60,7 @@ class HistoryService:
     @staticmethod
     def get_archived_graph_data(lookup_id):
         '''get json repr of old graph'''
-        query = "SELECT domain, node_depth, node_id, parent_node, url FROM Graph_Data WHERE lookup_id=?"
+        query = "SELECT domain, node_depth, node_id, parent_node, url, found FROM Graph_Data WHERE lookup_id=?"
         conn = lite.connect(DbSessionFactory.get_db_file_path())
         df = pd.read_sql_query(query,conn,params=(lookup_id,))
         conn.close()

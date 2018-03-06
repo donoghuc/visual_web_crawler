@@ -19,13 +19,15 @@ class CrawlService:
             crawl_obj = Spider(url, search_type, search_limit)
         
         new_entry = HistoryService.add_history(userid, url, search_type, search_limit, keyword)
-        build_frame = dict(node_id=[],node_depth=[],parent_node=[],domain=[],url=[])
+        build_frame = dict(node_id=[],node_depth=[],parent_node=[],domain=[],url=[],found=[])
         for i in crawl_obj.graph.nodes:
             build_frame['node_id'].append(i.id)
             build_frame['node_depth'].append(i.node_depth)
             build_frame['parent_node'].append(i.parent_node)
             build_frame['domain'].append(i.domain)
             build_frame['url'].append(i.url)
+            build_frame['found'].append(str(i.found).lower())
+            # print(i.found)
             
         df = pd.DataFrame(build_frame)
         df['lookup_id'] = new_entry

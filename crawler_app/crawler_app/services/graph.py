@@ -24,7 +24,7 @@ class Page_Node:
         self.id = id
         self.parent_node = parent_node
         self.keyword = keyword
-        self.found = bool()
+        self.found = False
 
         
 class Edge:

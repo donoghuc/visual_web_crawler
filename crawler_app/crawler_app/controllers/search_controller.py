@@ -49,7 +49,7 @@ class SearchController(BaseController):
             history = HistoryService.get_params_by_history_id(vm.new_from_archived)
             graph = CrawlService.kick_off_crawl(self.logged_in_user_id, history.get('url'), history.get('search_type'),
                                          history.get('search_limit'), history.get('keyword'))
-
+            print(graph)
             return {'crawl_result': graph}
 
         if vm.archived:
