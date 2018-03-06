@@ -85,7 +85,7 @@ class Spider:
                 print('keyword found!')
                 node.found = True
                 self.stop_crawl = True
-                break;
+                break
 
             node = self.get_next()
 
