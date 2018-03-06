@@ -46,7 +46,8 @@ class Spider:
 
 
     def crawler(self, search_type, node):
-        while len(self.to_visit) > 0 and not self.stop_crawl and self.count < MAX_URLS:
+
+        while node is not None and not self.stop_crawl and self.count < MAX_URLS:
             print('crawling')
             # check if link has already been crawled
             crawled = node.url in self.visited_set
@@ -71,12 +72,13 @@ class Spider:
                 
                 # if depth limit has not been reached
                 if node.node_depth < self.depth_limit:
+                    print('parsing')
                     links = pg.get_links(node.url)
                     links = validate_url(links, self.count, MAX_URLS)
                     # remove any duplicate links present
                     links = remove_duplicates(links)
                     self.crawl_links(node, links)
-                else: return 
+                else: break  
         
             # check if stop keyword is found
             if self.keyword and pg.find_keyword(self.keyword):
@@ -85,10 +87,10 @@ class Spider:
                 self.stop_crawl = True
                 break;
 
+            node = self.get_next()
+
             # get next node to crawl
-            if self.count < MAX_URLS:
-                node = self.get_next()
-        
+            
         self.end_crawl()
         return self.visited_set
 
@@ -97,22 +99,27 @@ class Spider:
     Difference between the two algos BFS and DFS: how urls are popped off'''
     def crawl_links(self, current_url, links):
         for link in links:
-            if link not in self.visited_set:
+            if link not in self.to_visit:
                 current_node = Page_Node(link, [current_url], self.depth, self.keyword)
                 # add url to end of list source nodes list
                 current_node.parents_list.append(current_url)
                 # add to the end of the to_visit list
                 self.to_visit.append(current_node)
+                print("added", current_url.url)
+                print(len(self.to_visit))
 
     def get_next(self):
-        if len(self.to_visit) > 0 and self.count < MAX_URLS:
+        if len(self.to_visit)>0 and self.count < MAX_URLS:
             # BFS: queue - url popped off from left; FIFO
             if self.search_type == 'BFS':
                 next_node = self.to_visit.popleft()
+                print("next node", next_node.url)
             # DFS: stack - url popped off from right; LIFO
             elif self.search_type == 'DFS':
                 next_node = self.to_visit.pop()
-        return next_node
+            return next_node
+        else:
+            return None
 
     # #used for testing
     # def print_data(self):
