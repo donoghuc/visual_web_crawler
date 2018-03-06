@@ -30,19 +30,16 @@ class HistoryService:
         conn = lite.connect(DbSessionFactory.get_db_file_path())
         df = pd.read_sql_query(query,conn,params=(user_id,))
         conn.close()
-        if len(df) > 0:
-            history_dict_list = list()
-            for i,r in df.iterrows():
-                history_dict_list.append(dict(auto_id=r['auto_id'],
+        history_dict_list = list()
+        for i,r in df.iterrows():
+            history_dict_list.append(dict(auto_id=r['auto_id'],
                                               url=r['url'],
                                               search_type=r['search_type'],
                                               search_limit=r['search_limit'],
                                               keyword=r['keyword'],
                                               created=r['created']))
-            return history_dict_list
+        return history_dict_list
 
-        else:
-            return None
 
     @staticmethod
     def get_params_by_history_id(lookup_id):
@@ -64,8 +61,12 @@ class HistoryService:
         conn = lite.connect(DbSessionFactory.get_db_file_path())
         df = pd.read_sql_query(query,conn,params=(lookup_id,))
         conn.close()
-        graph = build_json_graph(df)
-        return json.dumps(graph)
+        if len(df) > 1:
+            graph = build_json_graph(df)
+            return json.dumps(graph)
+        else:
+            graph = json.dumps(dict(url = df['url'].values[0], domain=df['domain'].values[0]))
+            return graph 
 
 
     @staticmethod
