@@ -85,7 +85,7 @@ zoomTo([root.x, root.y, root.r * 2 + margin]);
 $("#parent_url").attr("href", root['data']['url']).text(root['data']['url']);
 scaleAllText(root);
 
-// Enable pointer events for leaf nodes whose parent is the root node
+// Enable pointer events root node's children
 d3.selectAll("circle")
   .filter(function(d) { return d.parent === root; })
   .style("pointer-events", "auto");
