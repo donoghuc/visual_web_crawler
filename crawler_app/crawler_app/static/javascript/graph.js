@@ -1,3 +1,7 @@
+/*
+ * The template for this visualization came from: https://bl.ocks.org/mbostock/7607535
+ */
+
 var svg = d3.select("svg"),
     margin = 20,
     diameter = +svg.attr("height"),
@@ -14,25 +18,18 @@ function fixHeight() {
 fixHeight();
 $( window ).resize(fixHeight);
 
-var color = d3.scaleLinear()
-    .domain([-1, 5])
-    .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
-    .interpolate(d3.interpolateHcl);
-
 var numLeafNodes = 0;
 var pack = d3.pack()
     .size([diameter - margin, diameter - margin])
     .padding(function(d) {
       // add padding to all nodes with exactly one child so you can tell the difference between the levels
-      if ('children' in d && d.children.length == 1)
-        // using numLeafNodes here works since this function isn't called until "nodes = pack(root).descendants()"
-        //     which is after numLeafNodes is finalized in lines below
-        // you get bad looking results without dynamically changing the padding based on the number of leaf nodes
-        return diameter / (numLeafNodes * 2);
+      if ('children' in d && d.children.length == 1) {
+        return (d.r * diameter) / (numLeafNodes * 2);
+      }
       return 2;
     });
 
-root = JSON.parse(d3.select("#search_json").text());
+var root = JSON.parse(d3.select("#search_json").text());
 
 root = d3.hierarchy(root)
     .sum(function(d) {
@@ -47,15 +44,18 @@ var focus = root,
     nodes = pack(root).descendants(),
     view;
 
+var color = d3.scaleLinear()
+    .domain([0, root.height-1])
+    .range(["hsl(55, 100%, 50%)", "hsl(40, 50%, 20%)"])
+    .interpolate(d3.interpolateHcl);
+
 var circle = g.selectAll("circle")
   .data(nodes)
   .enter().append("circle")
     .attr("class", function(d) {
       var nodeClasses = "node";
 
-      if (!(d.parent))
-        nodeClasses += " node--root";
-      else if (!(d.children)) {
+      if (!(d.children)) {
         nodeClasses += " node--leaf";
         if ("found" in d.data && d.data.found === "true")
           nodeClasses += " nodeFound";
@@ -65,7 +65,7 @@ var circle = g.selectAll("circle")
     .style("fill", function(d) { return d.children ? color(d.depth) : null; })
     .on("mouseover", function(d) { d3.select("#child_url").text(d["data"]["url"]); })
     .on("mouseout", function(d) { d3.select("#child_url").text(""); })
-    .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+    .on("click", function(d) { zoom(d); d3.event.stopPropagation(); });
 
 var text = g.selectAll("text")
   .data(nodes)
@@ -85,17 +85,24 @@ zoomTo([root.x, root.y, root.r * 2 + margin]);
 $("#parent_url").attr("href", root['data']['url']).text(root['data']['url']);
 scaleAllText(root);
 
-// Enable pointer events for leaf nodes whose parent is the root node
+// Enable pointer events root node's children
 d3.selectAll("circle")
-  .filter(function(d) { return d.parent === root && this.classList.contains("node--leaf") })
+  .filter(function(d) { return d.parent === root; })
   .style("pointer-events", "auto");
 
 function zoom(d) {
-  $("#parent_url").attr("href", d['data']['url']).text(d['data']['url']);
   var focus0 = focus; focus = d;
 
-  if (focus0 == d)
+  // If current and previous node were both the root node, ignore zooming
+  if (focus === focus0 && focus === root)
     return;
+
+  // If the current zoomed node is clicked again, zoom up one level
+  if (focus === focus0 && focus0.parent)
+    focus = focus0.parent
+
+  // Set parent_url text to clicked node's url
+  $("#parent_url").attr("href", focus['data']['url']).text(focus['data']['url']);
 
   var transition = d3.transition()
       .duration(d3.event.altKey ? 7500 : 750)
@@ -108,9 +115,8 @@ function zoom(d) {
     .style("fill-opacity", 0);
 
   transition.selectAll("circle")
-    .filter(function(d) { return (d.parent === focus || this.style.pointerEvents === "auto" ) && this.classList.contains("node--leaf"); })
     .style("pointer-events", function(d) {
-      if (d.parent === focus || d.parent === focus.parent)
+      if ((d.parent === focus || d.parent === focus.parent) && d !== root)
         return "auto";
       return "none";
     });
@@ -118,6 +124,7 @@ function zoom(d) {
   transition.on("end", function() { scaleAllText(focus); });
 }
 
+// Zoom to a node
 function zoomTo(v) {
   var k = diameter / v[2]; view = v;
   node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });

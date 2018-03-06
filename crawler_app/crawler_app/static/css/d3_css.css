@@ -22,11 +22,15 @@
 }
 
 .label,
-.node--root,
+.node,
 .node--leaf {
   pointer-events: none;
 }
 
 .breakWord {
   word-wrap: break-word;
+}
+
+#parent_url {
+  text-shadow: 0 1px 0 #000000, 1px 0 0 #000000, -1px 0 0 #000000, 0 -1px 0 #000000;
 }
