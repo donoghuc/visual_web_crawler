@@ -86,7 +86,7 @@
                   <td>${search.search_type}</td>
                   <td>${search.search_limit}</td>
                   <td>${search.keyword}</td>
-                  <td><time>${search.created}</time></td>
+                  <td>${search.created}</td>
                   <td>
                     <form form class="standard-form" action="/search/results" method="POST">
                       <div class="form-group">
