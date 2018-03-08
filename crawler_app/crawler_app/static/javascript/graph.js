@@ -45,7 +45,7 @@ var focus = root,
     view;
 
 var color = d3.scaleLinear()
-    .domain([0, root.height-1])
+    .domain([0, Math.max(3, root.height-1)])
     .range(["hsl(55, 100%, 50%)", "hsl(40, 50%, 20%)"])
     .interpolate(d3.interpolateHcl);
 
