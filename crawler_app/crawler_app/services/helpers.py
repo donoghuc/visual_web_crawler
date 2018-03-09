@@ -8,6 +8,7 @@ import pandas as pd
 import json
 import os
 
+'''Validate links in list'''
 def validate_url(links, count, total):
     validated = []
     for link in links:
@@ -16,6 +17,7 @@ def validate_url(links, count, total):
                 validated.append(link)
     return validated
 
+'''Check if url is valid and clean up url'''
 def is_valid(url):
     parsed = urlparse(url)
     if parsed.scheme and parsed.netloc and parsed.path:
@@ -26,6 +28,7 @@ def is_valid(url):
             return True
     return False
 
+'''Validate the seed url, make sure website exists'''
 def validate_seed(url):
     try:
         res = requests.head(url)
@@ -33,26 +36,30 @@ def validate_seed(url):
             return True
     except: return False 
 
+'''Black list to avoid'''
 def is_allowed(url):
     excluded_list = ['mailto:', 'tell:', '.css', '.js', 'favicon', '.jpg', '.jpeg', '.gif', '.pdf', '.doc']
     if not any(word in url for word in excluded_list):
         return True
     return False
 
+'''Add http:// to complete the url'''
 def complete_url(url):
     if not url.startswith('http'):
         url = 'http://' + url
     return url
 
+'''Delete extra slashes in url'''
 def delete_slash(url):
     if url.startswith('//'):
         url = url[2:]
     return url
 
+'''Return url with no fragment identifiers'''
 def defrag_url(url):
-    #return url with no fragment identifiers
     return urllib.parse.urldefrag(url)[0]
     
+'''Removes any duplicate urls in the list'''
 def remove_duplicates(values):
     list = []
     seen = set()
@@ -62,8 +69,8 @@ def remove_duplicates(values):
             seen.add(value)
     return list
 
-# clean the document of the following unwanted tags
-# to make searching for keyword easier:
+'''Clean the document of unwanted tags
+to make searching for keyword easier'''
 cleaner = Cleaner(scripts=True,
                     style=True,
                     inline_style=True,
@@ -73,6 +80,7 @@ cleaner = Cleaner(scripts=True,
                     frames=True,
                     forms=True)
 
+'''Clean content page, remove extra spaces'''
 def to_text(content):
     # clean the page
     cleaned = cleaner.clean_html(content)
@@ -82,10 +90,11 @@ def to_text(content):
     result = re.sub(r'/\s+/g', ' ', result).strip()
     return (result.lower())
 
+'''Get the domain of a url'''
 def get_domain(url):
     return urlparse(url).netloc
 
-
+'''Create JSON for D3 visualization'''
 def build_json_graph(df):
     '''build dictionary  to turn into JSON for D3 viz'''
     def make_graph(node_id, graph):
