@@ -50,19 +50,19 @@
             <span class="section-heading-lower">BFS/DFS Algorithm</span>
           </h2>
         
-          <div class="row justify-content-center" >
-            <p>In order to test our crawler algorithm we set up a “graph” of HTML pages with known structure and content. The graph below is a representation of the test structure. The color of the node in the graph represents a searchable word on that page. For example the root node (/demo/node0) has the word “cyan” in the HTML body. The edges on the graph represent links to the other test nodes. For example the root node has a link to /demo/node1, node2 and node3. The fact that we control the links on the test structure as well as the context allows us to test the algorithm.
-            </p>
-            <p><a class="nav-link text-uppercase text-expanded" href="/demo/node0">https://www.caelum.site/demo/node0</a></p>
-          </div>
+            <div class="row justify-content-center" >
+              <p>In order to test our crawler algorithm we set up a “graph” of HTML pages with known structure and content. The graph below is a representation of the test structure. The color of the node in the graph represents a searchable word on that page. For example the root node (/demo/node0) has the word “cyan” in the HTML body. The edges on the graph represent links to the other test nodes. For example the root node has a link to /demo/node1, node2 and node3. The fact that we control the links on the test structure as well as the context allows us to test the algorithm.
+              </p>
+              <p><a class="nav-link text-uppercase text-expanded" href="/demo/node0">https://www.caelum.site/demo/node0</a></p>
+            </div>
 
-          <!-- HOW THE FUCK DO I CENTER THIS????? -->
-          <div class="bk-root justify-content-center">
-              <div class="bk-plotdiv" id="68b0bdc9-d4bf-485e-b3df-e1a83fb66e9c"></div>
-          </div>
+            <!-- HOW THE FUCK DO I CENTER THIS????? -->
+            <div class="bk-root row justify-content-center">
+                <div class="bk-plotdiv" id="b7ed4612-fd96-4a25-bbe8-3c12ac92e2ac"></div>
+            </div>
 
 
-          <div class="row justify-content-center">awesome writeup with useful info</div>
+            <div class="row justify-content-center">awesome writeup with useful info</div>
 
           </div>
 

@@ -32,4 +32,4 @@ class DbSessionFactory:
 
     @staticmethod
     def get_db_file_path():
-        return DbSessionFactory.db_file_pathd
+        return DbSessionFactory.db_file_path

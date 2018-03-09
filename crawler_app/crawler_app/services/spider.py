@@ -46,7 +46,7 @@ class Spider:
 
     def crawler(self, search_type, node):
         while node is not None and not self.stop_crawl and self.count < MAX_URLS:
-            print('crawling')
+            # print('crawling')
             # check if link has already been crawled
             crawled = node.url in self.visited_set
             if not crawled:
