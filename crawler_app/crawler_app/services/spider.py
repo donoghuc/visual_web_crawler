@@ -3,7 +3,7 @@ from crawler_app.services.helpers import *
 from crawler_app.services.page import Page
 import sys
 
-# can set the max urls based on the depth chosen on website?
+# max number of pages that will be visited 
 MAX_URLS = 100
         
 class Spider:
@@ -26,7 +26,7 @@ class Spider:
         self.root_node = Page_Node(seed_url, None, 0, None, 0, False)
         self.start(self.search_type, self.root_node)
     
-    '''Stat the crawl'''
+    '''Start the crawl'''
     def start(self, search_type, node):
         # initialize data structures
         print('start')
@@ -71,13 +71,17 @@ class Spider:
                 
                 # if depth limit has not been reached
                 if node.node_depth < self.depth_limit:
-                    print('parsing')
+                    #print('parsing')
                     links = pg.get_links(node.url)
                     links = validate_url(links, self.count, MAX_URLS)
                     # remove any duplicate links present
                     links = remove_duplicates(links)
                     self.crawl_links(node, links)
-                else: break  
+
+                # if DFS, end crawl when node depth==depth limit 
+                else:
+                    if search_type == "DFS":
+                        break; 
         
             # check if stop keyword is found
             if self.keyword and pg.find_keyword(self.keyword):
@@ -87,7 +91,8 @@ class Spider:
                 break
 
             # get next node to crawl
-            node = self.get_next()
+            if self.count < MAX_URLS:
+                node = self.get_next()
 
         self.end_crawl()
         return self.visited_set
@@ -104,8 +109,6 @@ class Spider:
                 current_node.parents_list.append(current_url)
                 # add to the end of the to_visit list
                 self.to_visit.append(current_node)
-                print("added", current_url.url)
-                print(len(self.to_visit))
 
     '''Obtain the next node to crawl based on search_type BFS or DFS
     if length of to_visit list is > 0, return node. else return None'''
