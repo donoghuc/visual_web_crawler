@@ -3,7 +3,7 @@ from crawler_app.services.helpers import *
 from crawler_app.services.page import Page
 import sys
 
-# can set the max urls based on the depth chosen on website?
+# max number of pages that will be visited 
 MAX_URLS = 100
         
 class Spider:
@@ -26,7 +26,7 @@ class Spider:
         self.root_node = Page_Node(seed_url, None, 0, None, 0, False)
         self.start(self.search_type, self.root_node)
     
-    #  start the crawling
+    '''Start the crawl'''
     def start(self, search_type, node):
         # initialize data structures
         self.to_visit.clear()
@@ -45,7 +45,6 @@ class Spider:
 
 
     def crawler(self, search_type, node):
-
         while node is not None and not self.stop_crawl and self.count < MAX_URLS:
             print('crawling')
             # check if link has already been crawled
@@ -71,13 +70,17 @@ class Spider:
                 
                 # if depth limit has not been reached
                 if node.node_depth < self.depth_limit:
-                    print('parsing')
+                    #print('parsing')
                     links = pg.get_links(node.url)
                     links = validate_url(links, self.count, MAX_URLS)
                     # remove any duplicate links present
                     links = remove_duplicates(links)
                     self.crawl_links(node, links)
-                else: break  
+
+                # if DFS, end crawl when node depth==depth limit 
+                else:
+                    if search_type == "DFS":
+                        break; 
         
             # check if stop keyword is found
             if self.keyword and pg.find_keyword(self.keyword):
@@ -86,16 +89,17 @@ class Spider:
                 self.stop_crawl = True
                 break
 
-            node = self.get_next()
-
             # get next node to crawl
-            
+            if self.count < MAX_URLS:
+                node = self.get_next()
+
         self.end_crawl()
         return self.visited_set
 
 
-    '''Urls are added to the right of the deque (append)
-    Difference between the two algos BFS and DFS: how urls are popped off'''
+    '''Add links to the to_visit list if not already in it
+    Urls are added to the right of the deque (append); 
+    difference between the two algos BFS and DFS: how urls are popped off in get_next()'''
     def crawl_links(self, current_url, links):
         for link in links:
             if link not in self.to_visit:
@@ -104,9 +108,10 @@ class Spider:
                 current_node.parents_list.append(current_url)
                 # add to the end of the to_visit list
                 self.to_visit.append(current_node)
-                # print("added", current_url.url)
-                # print(len(self.to_visit))
 
+
+    '''Obtain the next node to crawl based on search_type BFS or DFS
+    if length of to_visit list is > 0, return node. else return None'''
     def get_next(self):
         if len(self.to_visit)>0 and self.count < MAX_URLS:
             # BFS: queue - url popped off from left; FIFO
