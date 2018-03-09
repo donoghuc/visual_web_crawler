@@ -24,6 +24,7 @@ class HistoryService:
 
         return history.auto_id
 
+
     @staticmethod
     def get_history(user_id):
         query = "SELECT auto_id, url, search_type, search_limit, keyword, created FROM History WHERE user_id=?"
@@ -74,4 +75,3 @@ class HistoryService:
         conn = lite.connect(DbSessionFactory.get_db_file_path())
         dataframe.to_sql('Graph_Data',conn,if_exists='append',index=False)
         conn.close()
-        return "OK"

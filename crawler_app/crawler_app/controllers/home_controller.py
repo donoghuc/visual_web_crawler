@@ -12,6 +12,7 @@ class HomeController(BaseController):
     def index(self):
         return {'value': 'HOME'}
 
+
     @pyramid_handlers.action(renderer='templates/account/signin.pt',
                              request_method='GET',
                              name='signin')
@@ -34,10 +35,12 @@ class HomeController(BaseController):
 
         return self.redirect('/home')
 
+
     @pyramid_handlers.action()
     def logout(self):
         cookie_auth.logout(self.request)
         self.redirect('/home')
+
 
     @pyramid_handlers.action(renderer='templates/account/register.pt',
                              request_method='GET',
@@ -45,6 +48,7 @@ class HomeController(BaseController):
     def register_get(self):
         vm = RegisterViewModel()
         return vm.to_dict()
+
 
     @pyramid_handlers.action(renderer='templates/account/register.pt',
                              request_method='POST',
@@ -64,8 +68,8 @@ class HomeController(BaseController):
             return vm.to_dict()
 
         account = AccountService.create_account(vm.username, vm.password)
-        print("Registered new user: " + account.username)
+        # print("Registered new user: " + account.username)
 
-        # redirect
-        print("Redirecting to account index page...")
+        # # redirect
+        # print("Redirecting to account index page...")
         self.redirect('/home/signin')

@@ -1,7 +1,6 @@
 import sqlalchemy
 import sqlalchemy.orm
 from crawler_app.data.modelbase import SqlAlchemyBase
-# noinspection PyUnresolvedReferences
 import crawler_app.data.account
 import os
 
@@ -25,10 +24,12 @@ class DbSessionFactory:
         SqlAlchemyBase.metadata.create_all(engine)
         DbSessionFactory.factory = sqlalchemy.orm.sessionmaker(bind=engine)
 
+
     @staticmethod
     def create_session():
         return DbSessionFactory.factory()
 
+
     @staticmethod
     def get_db_file_path():
-        return DbSessionFactory.db_file_path
+        return DbSessionFactory.db_file_pathd

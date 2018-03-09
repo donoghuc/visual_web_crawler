@@ -1,16 +1,3 @@
-# from pyramid.config import Configurator
-
-
-# def main(global_config, **settings):
-#     """ This function returns a Pyramid WSGI application.
-#     """
-#     config = Configurator(settings=settings)
-#     config.include('pyramid_chameleon')
-#     config.add_static_view('static', 'static', cache_max_age=3600)
-#     config.add_route('home', '/')
-#     config.scan()
-#     return config.make_wsgi_app()
-
 import sys
 import os
 import datetime
@@ -25,10 +12,7 @@ from crawler_app.data.dbsession import DbSessionFactory
 import crawler_app.controllers.search_controller as search
 import crawler_app.controllers.demo_controller as demo
 
-# from crawler_app.services.log_service import LogService
-
 dev_mode = False
-
 
 def main(_, **settings):
     '''pull in configuration settings, initialize and fire off app server'''
@@ -41,17 +25,6 @@ def main(_, **settings):
     init_db(config)
 
     return config.make_wsgi_app()
-
-
-# def init_logging(config):
-#     ''' specify loggin infor mation '''
-#     settings = config.get_settings()
-#     log_level = settings.get('log_level')
-#     log_filename = settings.get('log_filename')
-
-#     LogService.global_init(log_level, log_filename)
-
-#     log_package_versions()
 
 
 def init_db(_):

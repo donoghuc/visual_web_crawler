@@ -1,6 +1,5 @@
 from crawler_app.viewmodels.signin_viewmodel import SigninViewModel
 
-
 class RegisterViewModel(SigninViewModel):
     def __init__(self):
         super().__init__()

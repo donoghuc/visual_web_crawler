@@ -29,7 +29,6 @@ class Spider:
     #  start the crawling
     def start(self, search_type, node):
         # initialize data structures
-        print('start')
         self.to_visit.clear()
         self.visited_set.clear()
         
@@ -105,15 +104,15 @@ class Spider:
                 current_node.parents_list.append(current_url)
                 # add to the end of the to_visit list
                 self.to_visit.append(current_node)
-                print("added", current_url.url)
-                print(len(self.to_visit))
+                # print("added", current_url.url)
+                # print(len(self.to_visit))
 
     def get_next(self):
         if len(self.to_visit)>0 and self.count < MAX_URLS:
             # BFS: queue - url popped off from left; FIFO
             if self.search_type == 'BFS':
                 next_node = self.to_visit.popleft()
-                print("next node", next_node.url)
+                # print("next node", next_node.url)
             # DFS: stack - url popped off from right; LIFO
             elif self.search_type == 'DFS':
                 next_node = self.to_visit.pop()

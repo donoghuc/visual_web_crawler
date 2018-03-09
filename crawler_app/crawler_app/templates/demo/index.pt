@@ -50,7 +50,6 @@
             <span class="section-heading-lower">BFS/DFS Algorithm</span>
           </h2>
         
-
           <div class="row justify-content-center" >
             <p>In order to test our crawler algorithm we set up a “graph” of HTML pages with known structure and content. The graph below is a representation of the test structure. The color of the node in the graph represents a searchable word on that page. For example the root node (/demo/node0) has the word “cyan” in the HTML body. The edges on the graph represent links to the other test nodes. For example the root node has a link to /demo/node1, node2 and node3. The fact that we control the links on the test structure as well as the context allows us to test the algorithm.
             </p>

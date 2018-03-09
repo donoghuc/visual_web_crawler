@@ -10,7 +10,6 @@
     
     <title>Visual Web Crawler</title>
     
-    
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -20,8 +19,7 @@
     
     <!-- Custom styles for this template -->
     <link href="/static/css/business-casual.css" rel="stylesheet">
-    <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
-    <!-- <script src="static/javascript/d3.v4.min.js"></script> -->
+
     <div metal:define-slot="additional_css"></div>
 
   </head>
@@ -30,9 +28,6 @@
 
   <!-- Fancy title above nav bar from bootstrap theme -->
     <div metal:define-slot="head_above_nav"></div>
-
-    <!-- Navigation -->
-    <!-- <div metal:define-slot="navigation"></div> -->
     <!-- Navigation -->
     <div metal:define-slot="navigation"></div> 
 

@@ -8,7 +8,6 @@ from crawler_app.services.helpers import validate_seed
 
 
 class SearchController(BaseController):
-
     @pyramid_handlers.action(renderer='templates/search/index.pt',
                              request_method='GET')
     def index(self):
@@ -21,23 +20,14 @@ class SearchController(BaseController):
 
         return state.to_dict()
 
+
     @pyramid_handlers.action(renderer='templates/visualization/viz.pt',
                              request_method='POST',
                              name='results')
     def new_search_post(self):
         vm = NewCrawl()
         vm.from_dict(self.data_dict)
-        # print(vm.url)
-        # print(vm.depth)
-        # if(vm.keyword):
-        #     print(vm.keyword)
-        # print(vm.search_type) 
-        # print(vm.previous_searches) 
-        # print(vm.search_id)
-        # print("here",vm.archived)
-        # print(vm.new_from_archived)
 
-        # INSERT VALIDATION HERE
         if not (vm.archived or vm.new_from_archived):
             if validate_seed(vm.url):
                 graph = CrawlService.kick_off_crawl(self.logged_in_user_id, vm.url, vm.search_type, vm.depth, vm.keyword)
@@ -49,7 +39,6 @@ class SearchController(BaseController):
             history = HistoryService.get_params_by_history_id(vm.new_from_archived)
             graph = CrawlService.kick_off_crawl(self.logged_in_user_id, history.get('url'), history.get('search_type'),
                                          history.get('search_limit'), history.get('keyword'))
-            print(graph)
             return {'crawl_result': graph}
 
         if vm.archived:

@@ -9,7 +9,7 @@ class Page(object):
         Page.to_visit = deque() # list of urls to crawl
         Page.visited_set = set()   # set of urls already crawled
         try:
-            print(self.url)
+            # print(self.url)
             res = requests.get(self.url, headers = {'User-Agent': 'Mozilla/5.0'}, timeout=10)
             self.content = res.content
         except:
@@ -42,4 +42,5 @@ class Page(object):
     def havent_visited(self, url):
         if url not in self.visited_set and url not in self.to_visit:
             return True
-        else: return False
+        else: 
+            return False

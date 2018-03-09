@@ -1,7 +1,6 @@
 import datetime
 import uuid
 from sqlalchemy import Column, String, Boolean, DateTime
-
 from crawler_app.data.modelbase import SqlAlchemyBase
 
 
@@ -14,5 +13,3 @@ class Account(SqlAlchemyBase):
     username = Column(String, index=True, unique=True, nullable=False)
     password_hash = Column(String)
     created = Column(DateTime, default=datetime.datetime.now)
-    # email_confirmed = Column(Boolean, nullable=False, default=False)
-    # is_super_user = Column(Boolean, nullable=False, default=False)

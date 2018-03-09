@@ -1,10 +1,8 @@
 <div metal:use-macro="view.layout">
 
-
   <div metal:fill-slot="additional_css">
   <link href="/static/css/d3_css.css" rel="stylesheet">
   </div>
-
 
   <div metal:fill-slot="navigation">
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
@@ -31,7 +29,6 @@
     </nav>
   </div>
 
-
   <div metal:fill-slot="main_content">
     <section id="scroll_here" class="page-section cta">
       <div class="col-xl-12 mx-auto text-center">
@@ -50,7 +47,6 @@
 
   <div metal:fill-slot="additional_js">
     <script src="/static/javascript/d3.v4.min.js"></script>
-    <!-- https://bl.ocks.org/mbostock/7607535 -->
     <script src="/static/javascript/graph.js"></script>
   </div>
 </div>

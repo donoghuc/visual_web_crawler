@@ -1,6 +1,5 @@
 from crawler_app.viewmodels.base_viewmodel import ViewModelBase
 
-
 class NewCrawl(ViewModelBase):
     def __init__(self):
         self.url = None
