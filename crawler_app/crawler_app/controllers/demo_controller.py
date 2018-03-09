@@ -2,7 +2,7 @@ import pyramid_handlers
 from crawler_app.controllers.base_controller import BaseController
 # from crawler_app.infrastructure.supressor import suppress
 # prefix = "http://localhost:6543"
-prefix = "https://www.caelum.site/"
+prefix = "https://www.caelum.site"
 
 class DemoController(BaseController):
 
