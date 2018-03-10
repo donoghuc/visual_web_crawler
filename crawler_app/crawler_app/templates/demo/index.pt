@@ -56,14 +56,11 @@
               <p><a class="nav-link text-uppercase text-expanded" href="/demo/node0">https://www.caelum.site/demo/node0</a></p>
             </div>
 
-            <!-- HOW THE FUCK DO I CENTER THIS????? -->
-            <div class ="centered">
+            <div class ="bk-center">
               <div class="bk-root row align-items-center justify-content-center">
                 <div class="bk-plotdiv" id="b7ed4612-fd96-4a25-bbe8-3c12ac92e2ac"></div> 
               </div>
             </div>
-
-            <div class="row justify-content-center">awesome writeup with useful info</div>
 
           </div>
 
