@@ -19,7 +19,14 @@ class SearchController(BaseController):
         state.previous_searches = HistoryService.get_history(self.logged_in_user_id)
 
         return state.to_dict()
-
+    
+    @pyramid_handlers.action(renderer='templates/search/error.pt',
+                             name="error")
+    def error(self):
+        if not self.logged_in_user_id:
+            print("Cannot view account page, must login")
+            self.redirect('/home/signin')
+        return {'value': 'page_error'}
 
     @pyramid_handlers.action(renderer='templates/visualization/viz.pt',
                              request_method='POST',
@@ -33,7 +40,7 @@ class SearchController(BaseController):
                 graph = CrawlService.kick_off_crawl(self.logged_in_user_id, vm.url, vm.search_type, vm.depth, vm.keyword)
                 return {'crawl_result': graph}
             else:
-                return HTTPFound(location='/search')
+                return self.redirect('error')
 
         if vm.new_from_archived:
             history = HistoryService.get_params_by_history_id(vm.new_from_archived)
@@ -44,4 +51,6 @@ class SearchController(BaseController):
         if vm.archived:
             graph = HistoryService.get_archived_graph_data(vm.archived)
             return {'crawl_result': graph}
+
+    
         

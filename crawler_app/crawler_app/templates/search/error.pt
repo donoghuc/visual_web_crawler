@@ -1,0 +1,54 @@
+<div metal:use-macro="view.layout">
+
+  <div metal:fill-slot="navigation">
+    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Caelum WC</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/home">Home
+              </a>
+            </li>
+            <li  class="nav-item active px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/search">Crawl!
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/demo">Demo</a>
+            </li>
+            <li class="nav-item px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="/home/logout">Log Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div metal:fill-slot="main_content">
+    <section class="page-section clearfix">
+      <div class="container">
+
+        <div class="intro-text text-center bg-faded p-5 rounded">
+          <h2 class="section-heading mb-4">
+            <span class="section-heading-upper">Caelum</span>
+            <span class="section-heading-lower">CRAWL ERROR</span>
+          </h2>
+
+          <p class="mb-3">The URL you have entered cannot be crawled or the website does not exist.</p>
+
+          <div tal:condition="view.logged_in_user_id" class="intro-button mx-auto">
+            <a class="btn btn-primary btn-xl" href="/search">Try Another Website</a>
+          </div>
+	     
+        </div>
+      </div>
+    </section>
+  </div>
+
+</div>
