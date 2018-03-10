@@ -57,10 +57,11 @@
             </div>
 
             <!-- HOW THE FUCK DO I CENTER THIS????? -->
-            <div class="bk-root row justify-content-center">
-                <div class="bk-plotdiv" id="b7ed4612-fd96-4a25-bbe8-3c12ac92e2ac"></div>
+            <div class ="centered">
+              <div class="bk-root row align-items-center justify-content-center">
+                <div class="bk-plotdiv" id="b7ed4612-fd96-4a25-bbe8-3c12ac92e2ac"></div> 
+              </div>
             </div>
-
 
             <div class="row justify-content-center">awesome writeup with useful info</div>
 
