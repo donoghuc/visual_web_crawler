@@ -26,6 +26,14 @@ p {
   line-height: 1.75;
 }
 
+a{
+  color: rgba(000, 104, 139, 1);
+}
+
+a:hover{
+  color: rgba(000, 104, 139, 1);
+}
+
 figure {
   display: inline-block;
   margin: 8px; 
@@ -280,10 +288,9 @@ figcaption {
 
 }
 
-.centered {
+.bk-center{
   margin-left: 25%;
   margin-right:20%;
   max-width: 90%;
-  align-items: center;
 }
 
