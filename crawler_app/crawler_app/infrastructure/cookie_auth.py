@@ -1,7 +1,7 @@
 import hashlib
 from datetime import timedelta
 
-auth_cookie_name = 'caelum_user'
+auth_cookie_name = 'caelum_cookie'
 
 
 def set_auth(request, user_id):
