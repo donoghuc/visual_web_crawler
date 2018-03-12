@@ -72,7 +72,7 @@
               </p>
 
               <p>
-              The representation of the demo graph using our visualization convention can be found at <a class="nav-link text-uppercase text-expanded" href="/demo/node0">INSERT DAVID”S LINK HERE</a> 
+              The representation of the demo graph using our visualization convention can be found at <a class="nav-link text-uppercase text-expanded" href="/search/demo">https://www.caelum.site/search/demo</a>
               </p>
 
               <p>Note how the root node0 encapsulates every other node. On the first level we see three smaller circles. These represent node1, 2 and 3. Node2 contains nodes 4 and 5, node 3 contains the node6 which in turn contains nodes down the tree. We see that leaf nodes (nodes with no children) are white while nodes at each level are colored similarly. Clicking down a path of nodes allows the user to clearly see the currently selected node (displayed as a link to that page above graph) as well as the ability to hover over nodes one level up or one level down from the current position within the graph. 

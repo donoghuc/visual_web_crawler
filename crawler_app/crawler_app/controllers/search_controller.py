@@ -52,5 +52,9 @@ class SearchController(BaseController):
             graph = HistoryService.get_archived_graph_data(vm.archived)
             return {'crawl_result': graph}
 
-    
-        
+    @pyramid_handlers.action(renderer='templates/visualization/viz.pt',
+                             name='demo')
+    def demo_graph_results(self):
+        graph = '''{"found": "false", "children": [{"found": "false", "children": [{"found": "false", "url": "https://www.caelum.site/demo/node5", "domain": "www.caelum.site"}, {"found": "false", "url": "https://www.caelum.site/demo/node4", "domain": "www.caelum.site"}], "url": "https://www.caelum.site/demo/node2", "domain": "www.caelum.site"}, {"found": "false", "url": "https://www.caelum.site/demo/node1", "domain": "www.caelum.site"}, {"found": "false", "children": [{"found": "false", "children": [{"found": "false", "url": "https://www.caelum.site/demo/node9", "domain": "www.caelum.site"}, {"found": "false", "children": [{"found": "false", "url": "https://www.caelum.site/demo/node10", "domain": "www.caelum.site"}], "url": "https://www.caelum.site/demo/node8", "domain": "www.caelum.site"}, {"found": "false", "url": "https://www.caelum.site/demo/node7", "domain": "www.caelum.site"}], "url": "https://www.caelum.site/demo/node6", "domain": "www.caelum.site"}], "url": "https://www.caelum.site/demo/node3", "domain": "www.caelum.site"}], "url": "https://www.caelum.site/demo/node0", "domain": "www.caelum.site"}'''
+
+        return {'crawl_result': graph}
