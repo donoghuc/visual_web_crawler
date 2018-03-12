@@ -51,9 +51,9 @@
           </h2>
         
             <div class="row justify-content-center" >
-              <p>In order to test our crawler algorithm we set up a “graph” of HTML pages with known structure and content. The graph below is a representation of the test structure. The color of the node in the graph represents a searchable word on that page. For example the root node (/demo/node0) has the word “cyan” in the HTML body. The edges on the graph represent links to the other test nodes. For example the root node has a link to /demo/node1, node2 and node3. The fact that we control the links on the test structure as well as the context allows us to test the algorithm.
+              <p>In order to test our crawler algorithm we set up a “graph” of HTML pages with known structure and content. The graph below is a representation of the test structure. The color of the node in the graph represents a searchable word on that page. For example the root node (/demo/node0) has the word “cyan” in the HTML body. The edges on the graph represent links to the other test nodes. For example the root node (/demo/node0) has a link to /demo/node1, node2 and node3. 
               </p>
-              <p><a class="nav-link text-uppercase text-expanded" href="/demo/node0">https://www.caelum.site/demo/node0</a></p>
+              <p>The link: <a class="nav-link text-uppercase text-expanded" href="/demo/node0">https://www.caelum.site/demo/node0</a> can be used to seed the crawling algorithm with different search parameters. Users can also navigate around by clicking links and inspecting the page content. Note that if you reach a "dead end" you can delete the /node[X] path from the URL in your browser and return to the demo page index.</p>
             </div>
 
             <div class ="bk-center">
@@ -61,6 +61,24 @@
                 <div class="bk-plotdiv" id="b7ed4612-fd96-4a25-bbe8-3c12ac92e2ac"></div> 
               </div>
             </div>
+
+            <div class="row justify-content-center" >
+              <p>The structure of the demo pages provide a simple example for new users to understand the crawler algorithms and search feature. The fact that we control the links on each page in the demo as well as the page content allows us to build test cases for our DFS and BFS algorithms. 
+              </p>
+              <p>The graphical representation of the demo page above uses the traditional graph theory representation of nodes as points and edges as lines connecting points. The traditional representation is useful for looking at the over-all structure of a graph but exploration of connections and user engagement is not optimal. We represent crawl results using a highly interactive diagram that allows users to get a sense of graph structure and gives them the ability to really explore paths through the graph in an engaging way.
+              </p>
+
+              <p>When a BFS or DFS search is not limited by depth or total nodes allowed and a finite sized collection of links is encountered the resulting graphs will be exactly the same. This can be demonstrated by seeding the crawling algorithm for either a depth first or breadth first crawl with demo node0 and setting the depth limit to greater than 6. The different crawling methods will explore the graph in different orders but will eventually explore and report every node.
+              </p>
+
+              <p>
+              The representation of the demo graph using our visualization convention can be found at <a class="nav-link text-uppercase text-expanded" href="/demo/node0">INSERT DAVID”S LINK HERE</a> 
+              </p>
+
+              <p>Note how the root node0 encapsulates every other node. On the first level we see three smaller circles. These represent node1, 2 and 3. Node2 contains nodes 4 and 5, node 3 contains the node6 which in turn contains nodes down the tree. We see that leaf nodes (nodes with no children) are white while nodes at each level are colored similarly. Clicking down a path of nodes allows the user to clearly see the currently selected node (displayed as a link to that page above graph) as well as the ability to hover over nodes one level up or one level down from the current position within the graph. 
+              </p>
+            </div>
+            
 
           </div>
 
