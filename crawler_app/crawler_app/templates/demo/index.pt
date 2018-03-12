@@ -51,14 +51,14 @@
           </h2>
         
             <div class="row justify-content-center" >
-              <p>In order to test our crawler algorithm we set up a “graph” of HTML pages with known structure and content. The graph below is a representation of the test structure. The color of the node in the graph represents a searchable word on that page. For example the root node (/demo/node0) has the word “cyan” in the HTML body. The edges on the graph represent links to the other test nodes. For example the root node (/demo/node0) has a link to /demo/node1, node2 and node3. 
+              <p>In order to test our crawler algorithm we set up a “graph” of HTML pages with known structure and content. The graph below is a representation of the test structure. The color of the node in the graph represents a searchable word on that page. For example the root node (/demo/node0) has the word “cyan” in the HTML body. The edges on the graph represent links to the other test nodes. For example the root node (/demo/node0) has a link to /demo/node1, node2 and node3. If you hover over the nodes on the graph the URL and search term for that page will appear. 
               </p>
               <p>The link: <a class="nav-link text-uppercase text-expanded" href="/demo/node0">https://www.caelum.site/demo/node0</a> can be used to seed the crawling algorithm with different search parameters. Users can also navigate around by clicking links and inspecting the page content. Note that if you reach a "dead end" you can delete the /node[X] path from the URL in your browser and return to the demo page index.</p>
             </div>
 
             <div class ="bk-center">
-              <div class="bk-root row align-items-center justify-content-center">
-                <div class="bk-plotdiv" id="b7ed4612-fd96-4a25-bbe8-3c12ac92e2ac"></div> 
+              <div class="bk-root">
+                  <div class="bk-plotdiv" id="3f843561-816f-42d8-bb45-e004c5fdfbb0"></div>
               </div>
             </div>
 
