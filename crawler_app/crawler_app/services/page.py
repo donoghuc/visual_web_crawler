@@ -14,6 +14,7 @@ class Page(object):
             self.content = res.content
         except:
             print('failed request')
+            self.content = ''
 
     '''Parse for links on page'''
     def get_links(self, url):
@@ -33,17 +34,18 @@ class Page(object):
                 links_set.add(link)
 
         return links_set
-        
-    '''Look through cleand page content for keyword'''    
+
+    '''Look through cleand page content for keyword'''
     def find_keyword(self, find_word):
-        content = to_text(self.content)
-        if find_word in content:
-            return True
+        if self.content:
+            content = to_text(self.content)
+            if find_word in content:
+                return True
         return False
-        
-    '''Check if url has already been visted (in visited_set)'''    
+
+    '''Check if url has already been visted (in visited_set)'''
     def havent_visited(self, url):
         if url not in self.visited_set and url not in self.to_visit:
             return True
-        else: 
+        else:
             return False
