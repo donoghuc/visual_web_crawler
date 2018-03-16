@@ -3,7 +3,7 @@ from crawler_app.services.helpers import *
 from crawler_app.services.page import Page
 import sys
 
-# max number of pages that will be visited 
+# max number of pages that will be visited/crawled
 MAX_URLS = 100
         
 class Spider:
@@ -14,7 +14,7 @@ class Spider:
         if keyword is not None:
             # change keyword to lowercase
             self.keyword = str(keyword).lower()
-        else: self.keyword = keyword 
+        else: self.keyword = keyword #(keyword is None)
         self.count = 0 # track number of links crawled
         self.depth_limit = int(depth_limit) # max depth to crawl
         self.depth = 0 # current node depth
@@ -78,6 +78,7 @@ class Spider:
                     self.crawl_links(node, links)
 
                 # if DFS, end crawl when node depth==depth limit 
+                # for BFS, continue until MAX_URLS is reached 
                 else:
                     if search_type == "DFS":
                         break; 

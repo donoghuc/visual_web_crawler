@@ -65,6 +65,7 @@ class HistoryService:
         if len(df) > 1:
             graph = build_json_graph(df)
             return json.dumps(graph)
+        # if graph only had one node, build with seed url 
         else:
             graph = json.dumps(dict(url = df['url'].values[0], domain=df['domain'].values[0]))
             return graph 

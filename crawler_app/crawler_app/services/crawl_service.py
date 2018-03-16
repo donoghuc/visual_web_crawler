@@ -19,6 +19,7 @@ class CrawlService:
             crawl_obj = Spider(url, search_type, search_limit)
         
         new_entry = HistoryService.add_history(userid, url, search_type, search_limit, keyword)
+        # build the data frame 
         build_frame = dict(node_id=[],node_depth=[],parent_node=[],domain=[],url=[],found=[])
         for i in crawl_obj.graph.nodes:
             build_frame['node_id'].append(i.id)
@@ -32,8 +33,10 @@ class CrawlService:
         df = pd.DataFrame(build_frame)
         df['lookup_id'] = new_entry
 
+        # add crawled graph data to history 
         HistoryService.add_data(df)
 
+        # if only one node is returned, create a graph with the seed url 
         if len(crawl_obj.graph.nodes) == 1:
             domain = crawl_obj.root_node.domain 
             return json.dumps(dict(domain = domain, url=url))

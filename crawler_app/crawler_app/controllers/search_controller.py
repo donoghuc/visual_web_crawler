@@ -22,6 +22,7 @@ class SearchController(BaseController):
     
     @pyramid_handlers.action(renderer='templates/search/error.pt',
                              name="error")
+    '''Redirect to error page if URL entered cannot be crawled'''
     def error(self):
         if not self.logged_in_user_id:
             print("Cannot view account page, must login")
@@ -35,23 +36,28 @@ class SearchController(BaseController):
         vm = NewCrawl()
         vm.from_dict(self.data_dict)
 
+        '''New search from search form'''
         if not (vm.archived or vm.new_from_archived):
+            # if seed url is valid, start the crawl 
             if validate_seed(vm.url):
                 graph = CrawlService.kick_off_crawl(self.logged_in_user_id, vm.url, vm.search_type, vm.depth, vm.keyword)
                 return {'crawl_result': graph}
             else:
                 return self.redirect('error')
 
+        '''New search from previously used parameters in history'''
         if vm.new_from_archived:
             history = HistoryService.get_params_by_history_id(vm.new_from_archived)
             graph = CrawlService.kick_off_crawl(self.logged_in_user_id, history.get('url'), history.get('search_type'),
                                          history.get('search_limit'), history.get('keyword'))
             return {'crawl_result': graph}
 
+        '''Get archived graph from previous search'''
         if vm.archived:
             graph = HistoryService.get_archived_graph_data(vm.archived)
             return {'crawl_result': graph}
 
+    '''Graph data for demo page'''
     @pyramid_handlers.action(renderer='templates/visualization/viz.pt',
                              name='demo')
     def demo_graph_results(self):
