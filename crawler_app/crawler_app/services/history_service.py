@@ -1,4 +1,3 @@
-# from passlib.handlers.sha2_crypt import sha512_crypt
 from crawler_app.data.history import History
 from crawler_app.data.dbsession import DbSessionFactory
 from crawler_app.services.helpers import build_json_graph
@@ -10,6 +9,7 @@ import json
 class HistoryService:
     @staticmethod
     def add_history(user_id, url, search_type, search_limit, keyword):
+        ''' add valid parameters that a user crawled for'''
         session = DbSessionFactory.create_session()
 
         history = History()
@@ -27,6 +27,7 @@ class HistoryService:
 
     @staticmethod
     def get_history(user_id):
+        ''' query the history to build search history view for returning users'''
         query = "SELECT auto_id, url, search_type, search_limit, keyword, created FROM History WHERE user_id=?"
         conn = lite.connect(DbSessionFactory.get_db_file_path())
         df = pd.read_sql_query(query,conn,params=(user_id,))
@@ -44,7 +45,7 @@ class HistoryService:
 
     @staticmethod
     def get_params_by_history_id(lookup_id):
-        ''' return parameters from an old search'''
+        ''' return parameters from an old search to seed new crawl'''
 
         session = DbSessionFactory.create_session()
 
@@ -73,6 +74,7 @@ class HistoryService:
 
     @staticmethod
     def add_data(dataframe):
+        '''add graph data to database for future query'''
         conn = lite.connect(DbSessionFactory.get_db_file_path())
         dataframe.to_sql('Graph_Data',conn,if_exists='append',index=False)
         conn.close()

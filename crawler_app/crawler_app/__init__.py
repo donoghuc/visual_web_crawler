@@ -28,6 +28,7 @@ def main(_, **settings):
 
 
 def init_db(_):
+    '''Initialize the SQLite database (NOTE: does not overwrite)'''
     top_folder = os.path.dirname(crawler_app.__file__)
     rel_folder = os.path.join('db', 'crawler.sqlite')
 
@@ -59,7 +60,7 @@ def add_controller_routes(config, ctrl, prefix):
     config.add_handler(prefix + 'ctrl_index/', '/' + prefix + '/', handler=ctrl, action='index')
     config.add_handler(prefix + 'ctrl', '/' + prefix + '/{action}', handler=ctrl)
     config.add_handler(prefix + 'ctrl/', '/' + prefix + '/{action}/', handler=ctrl)
-    config.add_handler(prefix + 'ctrl_id', '/' + prefix + '/{action}/{id}', handler=ctrl) # possibly remove this as no login yet
+    config.add_handler(prefix + 'ctrl_id', '/' + prefix + '/{action}/{id}', handler=ctrl) 
 
 
 def init_includes(config):

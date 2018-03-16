@@ -4,6 +4,7 @@ from crawler_app.data.modelbase import SqlAlchemyBase
 import crawler_app.data.account
 import os
 
+# configure db session for SQLite or pass location to pandas SQLite
 
 class DbSessionFactory:
     factory = None

@@ -2,6 +2,7 @@ from passlib.handlers.sha2_crypt import sha512_crypt
 from crawler_app.data.account import Account
 from crawler_app.data.dbsession import DbSessionFactory
 
+# functionality for dealing with user accounts
 
 class AccountService:
     @staticmethod

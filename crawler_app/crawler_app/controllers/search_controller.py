@@ -6,6 +6,7 @@ from crawler_app.services.history_service import HistoryService
 from crawler_app.services.crawl_service import CrawlService
 from crawler_app.services.helpers import validate_seed
 
+# interface for kicking off crawl. handle and validate user input and return results
 
 class SearchController(BaseController):
     @pyramid_handlers.action(renderer='templates/search/index.pt',
@@ -22,8 +23,8 @@ class SearchController(BaseController):
     
     @pyramid_handlers.action(renderer='templates/search/error.pt',
                              name="error")
-    '''Redirect to error page if URL entered cannot be crawled'''
     def error(self):
+        '''Redirect to error page if URL entered cannot be crawled'''
         if not self.logged_in_user_id:
             print("Cannot view account page, must login")
             self.redirect('/home/signin')
@@ -36,7 +37,7 @@ class SearchController(BaseController):
         vm = NewCrawl()
         vm.from_dict(self.data_dict)
 
-        '''New search from search form'''
+        # New search from search form
         if not (vm.archived or vm.new_from_archived):
             # if seed url is valid, start the crawl 
             if validate_seed(vm.url):
@@ -45,22 +46,23 @@ class SearchController(BaseController):
             else:
                 return self.redirect('error')
 
-        '''New search from previously used parameters in history'''
+        # New search from previously used parameters in history
         if vm.new_from_archived:
             history = HistoryService.get_params_by_history_id(vm.new_from_archived)
             graph = CrawlService.kick_off_crawl(self.logged_in_user_id, history.get('url'), history.get('search_type'),
                                          history.get('search_limit'), history.get('keyword'))
             return {'crawl_result': graph}
 
-        '''Get archived graph from previous search'''
+        # Get archived graph from previous search 
         if vm.archived:
             graph = HistoryService.get_archived_graph_data(vm.archived)
             return {'crawl_result': graph}
 
-    '''Graph data for demo page'''
+    
     @pyramid_handlers.action(renderer='templates/visualization/viz.pt',
                              name='demo')
     def demo_graph_results(self):
+        '''Graph data for demo page'''
         graph = '''{"found": "false", "children": [{"found": "false", "children": [{"found": "false", "url": "https://www.caelum.site/demo/node5", "domain": "www.caelum.site"}, {"found": "false", "url": "https://www.caelum.site/demo/node4", "domain": "www.caelum.site"}], "url": "https://www.caelum.site/demo/node2", "domain": "www.caelum.site"}, {"found": "false", "url": "https://www.caelum.site/demo/node1", "domain": "www.caelum.site"}, {"found": "false", "children": [{"found": "false", "children": [{"found": "false", "url": "https://www.caelum.site/demo/node9", "domain": "www.caelum.site"}, {"found": "false", "children": [{"found": "false", "url": "https://www.caelum.site/demo/node10", "domain": "www.caelum.site"}], "url": "https://www.caelum.site/demo/node8", "domain": "www.caelum.site"}, {"found": "false", "url": "https://www.caelum.site/demo/node7", "domain": "www.caelum.site"}], "url": "https://www.caelum.site/demo/node6", "domain": "www.caelum.site"}], "url": "https://www.caelum.site/demo/node3", "domain": "www.caelum.site"}], "url": "https://www.caelum.site/demo/node0", "domain": "www.caelum.site"}'''
 
         return {'crawl_result': graph}

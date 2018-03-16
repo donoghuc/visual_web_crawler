@@ -1,5 +1,6 @@
 import pyramid_handlers
 
+# do not expose route to public
 
 # noinspection PyPep8Naming
 class suppress(pyramid_handlers.action):

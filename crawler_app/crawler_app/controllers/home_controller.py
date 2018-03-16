@@ -5,6 +5,7 @@ from crawler_app.viewmodels.register_viewmodel import RegisterViewModel
 from crawler_app.viewmodels.signin_viewmodel import SigninViewModel
 import crawler_app.infrastructure.cookie_auth as cookie_auth
 
+#Home page controller, routes to register and sign in
 
 class HomeController(BaseController):
 
@@ -18,6 +19,7 @@ class HomeController(BaseController):
                              name='signin')
     def signin_get(self):
         return SigninViewModel().to_dict()
+
 
     @pyramid_handlers.action(renderer='templates/account/signin.pt',
                              request_method='POST',
@@ -68,8 +70,5 @@ class HomeController(BaseController):
             return vm.to_dict()
 
         account = AccountService.create_account(vm.username, vm.password)
-        # print("Registered new user: " + account.username)
-
-        # # redirect
-        # print("Redirecting to account index page...")
+ 
         self.redirect('/home/signin')

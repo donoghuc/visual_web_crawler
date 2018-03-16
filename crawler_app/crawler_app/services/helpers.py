@@ -8,8 +8,9 @@ import pandas as pd
 import json
 import os
 
-'''Validate links in list'''
+
 def validate_url(links, count, total):
+    '''Validate links in list'''
     validated = []
     for link in links:
         if count + len(validated) <= total:
@@ -17,8 +18,9 @@ def validate_url(links, count, total):
                 validated.append(link)
     return validated
 
-'''Check if url is valid and clean up url'''
+
 def is_valid(url):
+    '''Check if url is valid and clean up url'''
     parsed = urlparse(url)
     if parsed.scheme and parsed.netloc and parsed.path:
         url = defrag_url(url)
@@ -28,39 +30,45 @@ def is_valid(url):
             return True
     return False
 
-'''Validate the seed url, make sure website exists'''
+
 def validate_seed(url):
+    '''Validate the seed url, make sure website exists'''
     try:
         res = requests.head(url)
         if res.status_code < 400:
             return True
     except: return False 
 
-'''Black list to avoid'''
+
 def is_allowed(url):
+    '''Black list to avoid'''
     excluded_list = ['mailto:', 'tell:', '.css', '.js', 'favicon', '.jpg', '.jpeg', '.gif', '.pdf', '.doc']
     if not any(word in url for word in excluded_list):
         return True
     return False
 
-'''Add http:// to complete the url'''
+
 def complete_url(url):
+    '''Add http:// to complete the url'''
     if not url.startswith('http'):
         url = 'http://' + url
     return url
 
-'''Delete extra slashes in url'''
+
 def delete_slash(url):
+    '''Delete extra slashes in url'''
     if url.startswith('//'):
         url = url[2:]
     return url
 
-'''Return url with no fragment identifiers'''
+
 def defrag_url(url):
+    '''Return url with no fragment identifiers'''
     return urllib.parse.urldefrag(url)[0]
     
-'''Removes any duplicate urls in the list'''
+
 def remove_duplicates(values):
+    '''Removes any duplicate urls in the list'''
     list = []
     seen = set()
     for value in values:
@@ -69,8 +77,7 @@ def remove_duplicates(values):
             seen.add(value)
     return list
 
-'''Clean the document of unwanted tags
-to make searching for keyword easier'''
+# Clean the document of unwanted tags to make searching for keyword easier
 cleaner = Cleaner(scripts=True,
                     style=True,
                     inline_style=True,
@@ -80,8 +87,9 @@ cleaner = Cleaner(scripts=True,
                     frames=True,
                     forms=True)
 
-'''Clean content page, remove extra spaces'''
+
 def to_text(content):
+    '''Clean content page, remove extra spaces'''
     # clean the page
     cleaned = cleaner.clean_html(content)
     # get the text content
@@ -90,11 +98,12 @@ def to_text(content):
     result = re.sub(r'/\s+/g', ' ', result).strip()
     return (result.lower())
 
-'''Get the domain of a url'''
+
 def get_domain(url):
+    '''Get the domain of a url'''
     return urlparse(url).netloc
 
-'''Create JSON for D3 visualization'''
+
 def build_json_graph(df):
     '''build dictionary  to turn into JSON for D3 viz'''
     def make_graph(node_id, graph):

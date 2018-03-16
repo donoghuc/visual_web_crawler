@@ -1,6 +1,6 @@
 from crawler_app.services.helpers import get_domain
 
-'''Holds nodes and edges lists of the crawled graph'''
+# Holds nodes and edges lists of the crawled graph
 class Graph:
     def __init__(self, nodes=[], edges=[]):
         self.nodes = nodes
@@ -14,7 +14,7 @@ class Graph:
         edge = Edge(parent_id, target_id)
         self.edges.append(edge)
 
-'''Holds data about the page node (page that is crawled)'''
+# Holds data about the page node (page that is crawled)
 class Page_Node:
     __slots__ =('url', 'parents_list', 'domain', 'parent_node', 'id', 'node_depth', 'keyword', 'found')
     def __init__(self, url, parents_list, node_depth, id = None, parent_node = None, keyword = None):
@@ -27,7 +27,7 @@ class Page_Node:
         self.keyword = keyword
         self.found = False
 
-'''Edge between a parent and child page'''
+# Edge between a parent and child page
 class Edge:
     __slots__ = ['parent', 'target']
     def __init__(self, parent, target):

@@ -5,9 +5,11 @@ from crawler_app.infrastructure.supressor import suppress
 import crawler_app.infrastructure.cookie_auth as cookie_auth
 from crawler_app.services.account_service import AccountService
 
+# All controllers inherit from this base class
 
 class BaseController:
     def __init__(self, request):
+        ''' init method to set up chameleonn and store request'''
         self.request = request
         layout_render = pyramid.renderers.get_renderer('crawler_app:templates/shared/_layout.pt')
         impl = layout_render.implementation()
@@ -26,6 +28,7 @@ class BaseController:
 
     @property
     def data_dict(self):
+        ''' parse request and return in dictionary form'''
         data = dict()
         data.update(self.request.GET)
         data.update(self.request.POST)

@@ -1,6 +1,11 @@
 import pyramid_handlers
 from crawler_app.controllers.base_controller import BaseController
 
+# this page shows how to use the test set and explains the graph
+# the test set is implemented here as well
+# the prefix value is for adding full paths, localhost for testing, domain name for prod
+
+
 # prefix = "http://localhost:6543"
 prefix = "https://www.caelum.site"
 
@@ -8,7 +13,7 @@ class DemoController(BaseController):
 
     @pyramid_handlers.action(renderer='templates/demo/index.pt')
     def index(self):
-
+        ''' Reder the index page'''
         return {"value": "demo"}
 
 

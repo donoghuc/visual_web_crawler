@@ -3,6 +3,7 @@ import uuid
 from sqlalchemy import Column, String, Boolean, DateTime
 from crawler_app.data.modelbase import SqlAlchemyBase
 
+# user account data table
 
 class Account(SqlAlchemyBase):
     __tablename__ = 'Account'

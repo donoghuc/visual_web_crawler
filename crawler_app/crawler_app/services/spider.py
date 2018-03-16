@@ -26,8 +26,9 @@ class Spider:
         self.root_node = Page_Node(seed_url, None, 0, None, 0, False)
         self.start(self.search_type, self.root_node)
     
-    '''Start the crawl'''
+    
     def start(self, search_type, node):
+        '''Start the crawl'''
         # initialize data structures
         self.to_visit.clear()
         self.visited_set.clear()
@@ -98,10 +99,10 @@ class Spider:
         return self.visited_set
 
 
-    '''Add links to the to_visit list if not already in it
-    Urls are added to the right of the deque (append); 
-    difference between the two algos BFS and DFS: how urls are popped off in get_next()'''
+
     def crawl_links(self, current_url, links):
+        '''Add links to the to_visit list if not already in it Urls are added to the right of the deque (append)
+         difference between the two algos BFS and DFS: how urls are popped off in get_next()'''
         for link in links:
             if link not in self.to_visit:
                 current_node = Page_Node(link, [current_url], self.depth, self.keyword)
@@ -111,9 +112,10 @@ class Spider:
                 self.to_visit.append(current_node)
 
 
-    '''Obtain the next node to crawl based on search_type BFS or DFS
-    if length of to_visit list is > 0, return node. else return None'''
+
     def get_next(self):
+        '''Obtain the next node to crawl based on search_type BFS or DFS
+        if length of to_visit list is > 0, return node. else return None'''
         if len(self.to_visit)>0 and self.count < MAX_URLS:
             # BFS: queue - url popped off from left; FIFO
             if self.search_type == 'BFS':

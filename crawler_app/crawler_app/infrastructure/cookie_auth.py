@@ -5,6 +5,7 @@ auth_cookie_name = 'caelum_cookie'
 
 
 def set_auth(request, user_id):
+    '''build cookie, node somewhat annoying callback method to make it work'''
     hash_val = __hash_text(user_id)
     val = "{}:{}".format(user_id, hash_val)
 
@@ -14,15 +15,18 @@ def set_auth(request, user_id):
 
 
 def __hash_text(text):
+    '''salted has method'''
     text = 'saltiness_' + text + '_for_the_text'
     return hashlib.sha512(text.encode('utf-8')).hexdigest()
 
 
 def __add_cookie_callback(_, response, name, value):
+    '''set the cookie'''
     response.set_cookie(name, value, max_age=timedelta(days=30))
 
 
 def get_user_id_via_auth_cookie(request):
+    ''' get user id based on cookie value. Note no db interaction'''
     if auth_cookie_name not in request.cookies:
         return None
 
@@ -42,6 +46,7 @@ def get_user_id_via_auth_cookie(request):
 
 
 def logout(request):
+    '''remove cookie'''
     request.add_response_callback(lambda req, resp: __delete_cookie_callback(
         resp, auth_cookie_name
     ))

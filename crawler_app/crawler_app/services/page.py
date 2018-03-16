@@ -15,8 +15,9 @@ class Page(object):
             print('failed request')
             self.content = ''
 
-    '''Parse for links on page'''
+    
     def get_links(self, url):
+        '''Parse for links on page'''
         links_set = set()
         try:
             tree = lxml.html.fromstring(self.content)
@@ -34,16 +35,18 @@ class Page(object):
 
         return links_set
 
-    '''Look through cleand page content for keyword'''
+    
     def find_keyword(self, find_word):
+        '''Look through cleand page content for keyword'''
         if self.content:
             content = to_text(self.content)
             if find_word in content:
                 return True
         return False
 
-    '''Check if url has already been visted (in visited_set)'''
+    
     def havent_visited(self, url):
+        '''Check if url has already been visted (in visited_set)'''
         if url not in self.visited_set and url not in self.to_visit:
             return True
         else:
